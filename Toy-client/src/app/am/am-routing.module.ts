@@ -13,8 +13,8 @@ const routes: Routes = [
       { path: 'home', loadChildren: './common/shared/home/home.module#HomeModule'  },
       //categories
       { path: 'product', loadChildren: './categories/product/product.module#ProductModule' },
-      { path: 'classroom', loadChildren: './categories/classroom/classroom.module#ClassroomModule' },
-      { path: 'device', loadChildren: './categories/device/device.module#DeviceModule' },
+      { path: 'category', loadChildren: './categories/category/category.module#CategoryModule' },
+      { path: 'manufacturer', loadChildren: './categories/manufacturer/manufacturer.module#ManufacturerModule' },
      // { path: 'homepage', loadChildren: './categories/homepage/homepage.module#HomePageModule' },
     ]
   }

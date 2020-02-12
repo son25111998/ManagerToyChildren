@@ -13,11 +13,13 @@ import { Product } from '../product';
 import { Constants } from '../../../common/util/constants';
 import { ProductForm } from '../product-form.component';
 import { ProductService } from '../product.service';
+import { CategoryService } from '../../category/category.service';
+import { Category } from '../../category/category';
 declare var $;
 @Component({
   selector: 'app-product-business',
   templateUrl: './product-business.component.html',
-  providers: [ProductService]
+  providers: [ProductService, CategoryService]
 })
 
 /**
@@ -32,6 +34,10 @@ export class ProductBusinessComponent implements OnInit {
   /** the form object */
   ProductForm: FormGroup;
   Product: Product;
+  indexCategorySelection: number;
+  indexManufactererSelection: number;
+  categorySelections: Array<any> = [];
+  manufacturerSelections: Array<any> = [];
 
   isUpdate: boolean = true;
 
@@ -41,6 +47,7 @@ export class ProductBusinessComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private fb: FormBuilder,
     private translate: TranslateService,
     public toastr: ToastsManager, vcr: ViewContainerRef
@@ -50,6 +57,7 @@ export class ProductBusinessComponent implements OnInit {
 
   ngOnInit() {
     // Lấy bản ghi theo 'id' từ @PathParam
+    this.getListCategory();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.business = params['business'];
@@ -67,23 +75,78 @@ export class ProductBusinessComponent implements OnInit {
   isEqualOld(thenew, type) {
     try {
       var old;
-      if(type == "name") {
+      if (type == "name") {
         old = this.Product.nameProduct;
       }
-      if(old != thenew && old == this.standardized(thenew, type)) {
+      if (old != thenew && old == this.standardized(thenew, type)) {
         return false;
       } else return true;
-    } catch(e) {}
+    } catch (e) { }
   }
   standardized(thenew, type) {
     thenew = thenew.trim();
-    if(type == "name") {
+    if (type == "name") {
       thenew = thenew.split(" ").join("");
     } else {
       // console.log('xsa');
       thenew = thenew.replace(/\s+/g, ' ');
     }
     return thenew;
+  }
+  product: Product;
+  listCategory: Category[]
+  private getListCategory() {
+    this.categoryService.getListClassroom()
+      .then(response => {
+        console.log("cate", response.data)
+        console.log("id", response.data.id)
+        this.listCategory = response.data;
+        if (this.product && this.product.category) {
+          this.initializeCategorySelection(this.product.category.id);
+
+        } else {
+          this.initializeCategorySelection(0);
+        }
+
+      }).catch(error => {
+        console.log(error)
+      });
+  }
+
+  private initializeCategorySelection(selectItem: number) {
+    let category_datas = []
+    var countItems = 0;
+    if (this.listCategory) {
+      this.listCategory.forEach(element => {
+        console.log(element);
+        var item = {
+          id: null, text: null
+        };
+        item.text = element.name;
+        item.id = element.id;
+        category_datas.push(item)
+        if (item.id == selectItem) {
+          this.indexCategorySelection = countItems
+        }
+        countItems += 1
+      });
+    }
+    this.categorySelections = category_datas
+    console.log(this.categorySelections)
+  }
+  codeCategory: string;
+  categoryChanged(id: number) {
+    //debugger 
+    var id1: number
+    //this.ProductForm.get('province.id').setValue(id);
+    this.categoryService.findOne(id).then(response => {
+      this.codeCategory = response.data.code;
+      console.log("Cáccs", response)
+      //this.ProductForm.get('categoryId').setValue(this.codeCategory)
+    }).catch(error => {
+      console.log(error)
+    });
+
   }
 
 

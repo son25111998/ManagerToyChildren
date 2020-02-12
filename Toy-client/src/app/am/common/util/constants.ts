@@ -31,7 +31,7 @@ export class Constants {
     static IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
 
     static PHONE_NUMBER_PATTERN = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
-
+    static NUMBER_PATTERN = "^(0|[1-9][0-9.]*)$"
     static IS_AUTHENTIC = "isAuthentic";
 
     static CURRENT_USER = "currentUser";

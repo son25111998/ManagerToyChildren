@@ -3,7 +3,8 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Classroom } from './Classroom';
+
+import { Manufacturer } from './Manufacturer';
 import { Router } from '@angular/router';
 import { concatStatic } from 'rxjs/operator/concat';
 import { CommonService } from '../../common/util/common-service/common.service';
@@ -15,9 +16,10 @@ import { HeaderValue } from '../../common/util/header-value';
  * Examine the handling  of business requirements with Country module
  */
 @Injectable()
-export class ClassroomService extends CommonService {
+export class ManufacturerService extends CommonService {
+
     /**  the api url */
-    ClassroomApi = Constants.BASE_URL + "/classroom-management/managed-classroom";
+    ManufacturerApi = Constants.BASE_URL + "/manufacturer-management/managed-manufacturer";
 
     constructor(
         private http: Http,
@@ -30,15 +32,15 @@ export class ClassroomService extends CommonService {
      * @description create a new country
      * @param country the new country
      */
-    create(classroom: Classroom): Promise<any> {
+    create(manufacturer: Manufacturer): Promise<any> {
         // amphitheater.status = "1";
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.post(this.ClassroomApi,
-            classroom, { headers: secureHeaders })
+        var promise = this.http.post(this.ManufacturerApi,
+            manufacturer, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -51,14 +53,14 @@ export class ClassroomService extends CommonService {
      * @description update a country
      * @param country the new country
      */
-    update(classroom: Classroom): Promise<any> {
+    update(manufacturer: Manufacturer): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.put(this.ClassroomApi,
-            classroom, { headers: secureHeaders })
+        var promise = this.http.put(this.ManufacturerApi,
+            manufacturer, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -77,7 +79,7 @@ export class ClassroomService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.delete(this.ClassroomApi + "/delete-all/" + entityIds, { headers: secureHeaders })
+        var promise = this.http.delete(this.ManufacturerApi + "/delete-all/" + entityIds, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -91,13 +93,13 @@ export class ClassroomService extends CommonService {
    * @param country the search restriction
    * @param page the paging restriction
    */
-    getPageClassroom(page: number): Promise<any> {
+    getPageDevice(manufacturer: Manufacturer, page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
-        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        // secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
+        var promise = this.http.get(this.ManufacturerApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -105,13 +107,16 @@ export class ClassroomService extends CommonService {
             });
         return promise;
     }
+
+    /**
+     * @description Returns a list of entities
+     */
     getListClassroom(): Promise<any> {
-        debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "/all", { headers: secureHeaders })
+        var promise = this.http.get(this.ManufacturerApi+"/all", { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -130,7 +135,7 @@ export class ClassroomService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "/find-id/" + id, { headers: secureHeaders })
+        var promise = this.http.get(this.ManufacturerApi + "/find-one/" + id, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -139,7 +144,9 @@ export class ClassroomService extends CommonService {
         return promise;
     }
 
-    advanceSearch(classroom: Classroom, page: number): Promise<any> {
+
+
+    advanceSearch(manufacturer: Manufacturer, page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         let secureHeaders = new Headers();
@@ -147,7 +154,7 @@ export class ClassroomService extends CommonService {
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
         debugger;
-        var promise = this.http.post(this.ClassroomApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE, classroom, { headers: secureHeaders })
+        var promise = this.http.post(this.ManufacturerApi + "/advance-search?page=" + page+ "&size=" + Constants.PAGE_SIZE, manufacturer, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -156,5 +163,34 @@ export class ClassroomService extends CommonService {
         return promise;
     }
 
+    getListDeviceById(idDevice: number): Promise<any> {
+        debugger
+        let accessToken = this.getAccessToken();
+        var secureHeaders = new Headers();
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
+        var promise = this.http.get(this.ManufacturerApi + "/" + idDevice , { headers: secureHeaders })
+            .toPromise()
+            .then(response => response.json() as any)
+            .catch(error => {
+                return this.handleError(error);
+            });
+        return promise;
+    }
+
+    findClassromByDevice(id: Number) :Promise<any> {
+        debugger
+        let accessToken = this.getAccessToken();
+        var secureHeaders = new Headers();
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
+        var promise = this.http.get(this.ManufacturerApi + "/" + id , { headers: secureHeaders })
+            .toPromise()
+            .then(response => response.json() as any)
+            .catch(error => {
+                return this.handleError(error);
+            });
+        return promise;
+    }
 
 }

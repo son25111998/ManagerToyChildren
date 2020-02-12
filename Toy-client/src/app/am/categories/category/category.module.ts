@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule, Router } from '@angular/router';
-import { ClassroomListComponent } from './classroom-list.component';
+import { CategoryListComponent } from './category-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule } from "angular2-datatable";
 
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { createTranslateLoader, CustomHandler } from '../../../i18n-setting';
-import { HttpClient } from '@angular/common/http';
-import { ClassroomDetailComponent } from './classroom-detail/Classroom-detail.component';
+import { Http } from '@angular/http';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
 
 
 import { SelectModule } from 'ng2-select';
-import { ClassroomBusinessComponent } from './classroom-business/classroom-business.component';
+import {CategoryBusinessComponent } from './category-business/category-business.component';
 import { ResponseMessageModule } from '../../common/util/response-message/response-message.module';
 
 const routes: Routes = [
 
-  { path: '', component: ClassroomListComponent, pathMatch: 'full' },
-  { path: 'detail/:id', component: ClassroomDetailComponent, pathMatch: 'full' },
-  { path: ':business', canActivate: [], component: ClassroomBusinessComponent, pathMatch: 'full' },
-  { path: ':business/:id', canActivate: [], component: ClassroomBusinessComponent, pathMatch: 'full' },
+  { path: '', component: CategoryListComponent, pathMatch: 'full' },
+  { path: 'detail/:id', component: CategoryDetailComponent, pathMatch: 'full' },
+  { path: ':business', canActivate: [], component: CategoryBusinessComponent, pathMatch: 'full' },
+  { path: ':business/:id', canActivate: [], component: CategoryBusinessComponent, pathMatch: 'full' },
 ]
 
 @NgModule({
@@ -38,18 +38,18 @@ const routes: Routes = [
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),
-        deps: [HttpClient]
+        deps: [Http]
       },
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomHandler },
       isolate: false
     })
   ],
   declarations: [
-    ClassroomListComponent,
-    ClassroomBusinessComponent,
-    ClassroomDetailComponent,
+    CategoryListComponent,
+    CategoryBusinessComponent,
+    CategoryDetailComponent,
   ],
   exports: [RouterModule],
   providers: []
 })
-export class ClassroomModule { }
+export class CategoryModule { }

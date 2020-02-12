@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClassroomForm } from './classroom-form.component';
+import { ManufacturerForm } from './manufacturer-form.component';
 
-import { ClassroomService } from './classroom.service';
+import { ManufacturerService } from './manufacturer.service';
 
 import { DataTable } from 'angular2-datatable';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -12,31 +12,32 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
 import { stat } from 'fs';
-import { Classroom } from './classroom';
+import { Category } from '../Category/category';
+import { from } from 'rxjs/observable/from';
+import { Manufacturer } from './Manufacturer';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { PageInfo } from '../../common/util/page-info';
 import { Constants } from '../../common/util/constants';
-import { ClassroomPageInfo } from './ClassroomPageInfo';
+import { ManufacturerPageInfo } from './ManufacturerPageInfo';
 
 @Component({
-    selector: 'app-classroom-list',
-    templateUrl: './classroom-list.component.html',
-    providers: [Classroom, DialogService, DataTable, ClassroomService]
+    selector: 'app-manufacturer-list',
+    templateUrl: './manufacturer-list.component.html',
+    providers: [Manufacturer, DialogService, DataTable, ManufacturerService]
 })
 /**
  * @description: Display the list of countries and supports search, delete objects
  */
-export class ClassroomListComponent implements OnInit {
+export class ManufacturerListComponent implements OnInit {
 
-    classroomInfo: ClassroomPageInfo
+    manufacturerPageInfo: ManufacturerPageInfo;
     // name: Amphitheater.nameAmphitheater;
-    classrooms: Classroom[];
     currentPage = 0;
     filterForm: FormGroup;
     // search restriction
-    searchObject: Classroom;
+    searchObject: Manufacturer;
     checkAllItemFlag = false;
-    currentPageView: number;
+    currentPageView: number = 0;
     fromElement: number;
     toElement: number;
     // total page
@@ -46,17 +47,33 @@ export class ClassroomListComponent implements OnInit {
     // toal elements
     totalElements: number;
     numberDeleteItems = 0;
+    id: number;
+    deviceId: number;
+    /** the name of business */
+    business: string;
+    category: Category
+    /** the form object */
+    ManufacturerForm: FormGroup;
+    Manufacturer: Manufacturer;
+    isUpdate: boolean = true;
+    listProduct = null;
+    indexCategorySelection = null;
+    productSelections = null;
+    listCategory = null;
+    categorySelections = null;
+
 
     listStatus = Constants.STATUS_LIST;
 
     // list amphitheater to export file excel
+    manufacturers: Manufacturer[];
     fromNumber: number;
     toNumber: number;
-    filterObject: Classroom;
-    switchGetClassroom: boolean;
+    filterObject: Manufacturer;
+    switchGetDevice: boolean;
 
     constructor(
-        private classroomService: ClassroomService,
+        private manufacturerService: ManufacturerService,
         // private exportExcelService: ExcelExportService,
         private dialogService: DialogService,
         private fb: FormBuilder,
@@ -72,9 +89,9 @@ export class ClassroomListComponent implements OnInit {
 
     ngOnInit() {
 
-        this.filterForm = ClassroomForm.classroomForm(this.fb, '');
-        this.searchObject = new Classroom();
-        this.getPageClassroom(this.currentPage);
+        this.filterForm = ManufacturerForm.ManufacturerForm(this.fb, '');
+        this.searchObject = new Manufacturer();
+        this.getPageManufacturer(this.searchObject, this.currentPage);
         new PageInfo();
     }
 
@@ -83,17 +100,18 @@ export class ClassroomListComponent implements OnInit {
      * @param country: the search restriction
      * @param page: the paging restriction
      */
-    getPageClassroom(currentPage: number) {
+    getPageManufacturer(manufacturer: Manufacturer, page: number) {
+        this.searchObject = manufacturer;
         debugger
-        this.classroomService
-            .getPageClassroom(currentPage)
-            .then(
-                classroomInfo => {
-                this.classroomInfo = classroomInfo.data;
-                this.classrooms = this.classroomInfo.content;
-                this.pageLength = this.classroomInfo.content.length;
-                this.totalElements = this.classroomInfo.totalElements;
-                this.totalPages = this.classroomInfo.totalPages;
+        this.manufacturerService.getPageDevice(manufacturer, page)
+            .then(response => {
+                debugger
+                this.manufacturerPageInfo = response.data;
+                console.log(this.manufacturerPageInfo)
+                this.manufacturers = this.manufacturerPageInfo.content;
+                this.pageLength = this.manufacturerPageInfo.content.length;
+                this.totalElements = this.manufacturerPageInfo.totalElements;
+                this.totalPages = this.manufacturerPageInfo.totalPages;
                 if (!(this.totalPages > 0)) {
                     this.currentPage = -1;
                 }
@@ -102,10 +120,14 @@ export class ClassroomListComponent implements OnInit {
                 this.countNumberDeleteItems();
             }).catch(
                 error => {
+                    console.log("no ok");
                     console.log(error);
                 });
     }
 
+    getNumberDeleteItems(): number {
+        return this.numberDeleteItems;
+    }
     /**
      * @description: Manage page transfers
      * @param page: Page will move to
@@ -140,7 +162,7 @@ export class ClassroomListComponent implements OnInit {
         if (flag == true) {
 
             this.currentPage = pageNumber;
-            this.getPageClassroom(this.currentPage);
+            this.getPageManufacturer(this.searchObject, this.currentPage);
             // page.value = pageNumber + 1;
         }
     }
@@ -148,13 +170,13 @@ export class ClassroomListComponent implements OnInit {
     // set the information of the page
     private setCurrentPage() {
         debugger;
-        if (this.classroomInfo.numberOfElements > 0) {
-            this.currentPageView = this.classroomInfo.number + 1;
+        if (this.manufacturerPageInfo.numberOfElements > 0) {
+            this.currentPageView = this.manufacturerPageInfo.number + 1;
         } else {
             this.currentPageView = 0;
         }
-        var numberOfElements = this.classroomInfo.numberOfElements;
-        var size = this.classroomInfo.size;
+        var numberOfElements = this.manufacturerPageInfo.numberOfElements;
+        var size = this.manufacturerPageInfo.size;
         this.fromNumber = (this.currentPageView - 1) * size + 1;
         this.toNumber = (this.currentPageView - 1) * size + numberOfElements;
         if (this.toNumber < 1) {
@@ -172,7 +194,7 @@ export class ClassroomListComponent implements OnInit {
             .confirm('Confirm Information', 'Are you sure to delete?')
             .subscribe(response => {
                 if (response == true) {
-                    this.classroomService.deleteClassroomsById(entityIds)
+                    this.manufacturerService.deleteClassroomsById(entityIds)
                         .then(response => {
                             let message;
                             if (response.code == 200) {
@@ -197,7 +219,7 @@ export class ClassroomListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageClassroom(this.currentPage);
+                            this.getPageManufacturer(this.searchObject, this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -231,7 +253,7 @@ export class ClassroomListComponent implements OnInit {
      */
     checkAllItem() {
         this.checkAllItemFlag = !this.checkAllItemFlag;
-        this.classroomInfo.content.forEach(item => {
+        this.manufacturerPageInfo.content.forEach(item => {
             item.checked = this.checkAllItemFlag;
         });
     }
@@ -242,16 +264,16 @@ export class ClassroomListComponent implements OnInit {
      */
     deleteCheckedItems() {
       var entityIds = [];
-      this.classrooms.forEach(item => {
+      this.manufacturers.forEach(item => {
           if (item.checked == true) {
-              entityIds.push(item.idClassroom);
+              entityIds.push(item.id);
           }
       });
       if (entityIds.length > 0) {
           this.dialogService.confirm('Confirm Information', 'Are you sure to delete?')
               .subscribe(response => {
                   if (response == true) {
-                      this.classroomService.deleteClassroomsById(entityIds)
+                      this.manufacturerService.deleteClassroomsById(entityIds)
                           .then(response => {
                               let message;
                               if (response.code == 200) {
@@ -276,7 +298,7 @@ export class ClassroomListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageClassroom(this.currentPage);
+                            this.getPageManufacturer(this.searchObject, this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -294,13 +316,12 @@ export class ClassroomListComponent implements OnInit {
               })
       }
   }
-
     /**
      * Count the number of objects checked
     */
     countNumberDeleteItems() {
         this.numberDeleteItems = 0;
-        this.classroomInfo.content.forEach(item => {
+        this.manufacturerPageInfo.content.forEach(item => {
             if (item.checked) {
                 this.numberDeleteItems += 1;
             }
@@ -315,18 +336,19 @@ export class ClassroomListComponent implements OnInit {
     //     var isAuthorizied = this.authGuardSubmenu.isAuthoriziedWithCurrentUrl(this.router.url);
     //     return isAuthorizied;
     // }
-    search(classroom: Classroom, page: number) {
-        this.filterObject = classroom;
-        this.switchGetClassroom = true;
+
+    search(manufacturer: Manufacturer, page: number) {
+        this.filterObject = manufacturer;
+        this.switchGetDevice = true;
         debugger;
-        this.classroomService.advanceSearch(classroom, page)
-            .then(classroomInfo => {
+        this.manufacturerService.advanceSearch(manufacturer, page)
+            .then(deviceInfo => {
                 debugger;
-                this.classroomInfo = classroomInfo.data;
-                this.classrooms = this.classroomInfo.content;
-                this.pageLength = this.classroomInfo.content.length;
-                this.totalElements = this.classroomInfo.totalElements;
-                this.totalPages = this.classroomInfo.totalPages;
+                this.manufacturerPageInfo = deviceInfo.data;
+                this.manufacturers = this.manufacturerPageInfo.content;
+                this.pageLength = this.manufacturerPageInfo.content.length;
+                this.totalElements = this.manufacturerPageInfo.totalElements;
+                this.totalPages = this.manufacturerPageInfo.totalPages;
                 if (this.totalPages > 0) {
                     this.currentPage = -1;
                 }
@@ -338,21 +360,5 @@ export class ClassroomListComponent implements OnInit {
             });
     }
 
-    routerLinkUpdate(type) {
-        debugger
-        if (type == 'create2') {
-            this.router.navigate(['/classroom/create2']);
-        } else {
-            this.classroomInfo.content.forEach(item => {
-                if (item.checked == true) {
-                    debugger
-                    this.router.navigate(['/classroom/' + type, item.idClassroom]);
-                }
-            });
-        }
-    }
-    getNumberDeleteItems(): number {
-        return this.numberDeleteItems;
-    }
 
 }

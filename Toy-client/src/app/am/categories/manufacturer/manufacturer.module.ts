@@ -8,17 +8,17 @@ import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ng
 import { createTranslateLoader, CustomHandler } from '../../../i18n-setting';
 import { HttpClient } from '@angular/common/http';
 
-import { DeviceBusinessComponent } from './device-business/device-business.component';
-import { DeviceListComponent } from './device-list.component';
-import { DeviceDetailComponent } from './device-detail/device-detail.component';
+import { ManufacturerBusinessComponent } from './manufacturer-business/manufacturer-business.component';
+import { ManufacturerListComponent } from './manufacturer-list.component';
+import { ManufacturerDetailComponent } from './manufacturer-detail/manufacturer-detail.component';
 
 import { SelectModule } from 'ng2-select';
 const routes: Routes = [
 
-  { path: '', component: DeviceListComponent, pathMatch: 'full' },
-  { path: 'detail/:id', component: DeviceDetailComponent, pathMatch: 'full' },
-  { path: ':business/:id', canActivate: [], component: DeviceBusinessComponent, pathMatch: 'full' },
-  { path: ':business', canActivate: [], component: DeviceBusinessComponent, pathMatch: 'full' },
+  { path: '', component: ManufacturerListComponent, pathMatch: 'full' },
+  { path: 'detail/:id', component: ManufacturerDetailComponent, pathMatch: 'full' },
+  { path: ':business/:id', canActivate: [], component: ManufacturerBusinessComponent, pathMatch: 'full' },
+  { path: ':business', canActivate: [], component: ManufacturerBusinessComponent, pathMatch: 'full' },
 ]
 
 @NgModule({
@@ -41,13 +41,13 @@ const routes: Routes = [
     })
   ],
   declarations: [
-    DeviceListComponent,
-    DeviceBusinessComponent,
-    DeviceDetailComponent,
-    DeviceDetailComponent,
-    DeviceListComponent,
+    ManufacturerListComponent,
+    ManufacturerBusinessComponent,
+    ManufacturerDetailComponent,
+    ManufacturerDetailComponent,
+    ManufacturerListComponent,
   ],
   exports: [RouterModule],
   providers: []
 })
-export class DeviceModule { }
+export class ManufacturerModule { }

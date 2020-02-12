@@ -131,6 +131,33 @@
 		"Amount": "Số lượng",
 		"Manufacturer":"Nhà sản xuất",
 		"UpdateTime" : "Thời gian cập nhật",
+		"UpdatedBy":"Người cập nhật",
+		"Category":"Thể loại",
+		"EnterAmount":"Nhập số lượng"
+	},
+	"Category": {
+		"Title": "Người dùng",
+		"Code": "Mã Thể loại",
+		"Name": "Tên Thể loại",
+		"CreatedBy": "Người tạo",
+		"ChooseCategory": "Chọn thể loại",
+		"Status": "Trạng thái",
+		"Classroom": "Tên phòng học",
+		"Amount": "Số lượng",
+		"UpdateTime" : "Thời gian cập nhật",
+		"UpdatedBy":"Người cập nhật"
+	},
+	"Manufacturer": {
+		"Title": "Nhà sản xuất",
+		"Code": "Mã nhà sản xuất",
+		"Name": "Tên nhà sản xuất",
+		"Created": "Thời gian tạo",
+		"CreatedBy": "Người tạo",
+		"Chooseman": "Chọn nhà sản xuất",
+		"Status": "Trạng thái",
+		"Classroom": "Tên phòng học",
+		"Amount": "Số lượng",
+		"UpdateTime" : "Thời gian cập nhật",
 		"UpdatedBy":"Người cập nhật"
 	},
 	"Account": {

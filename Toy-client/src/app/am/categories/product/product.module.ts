@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductBusinessComponent } from './product-business/product-business.component';
 import { ResponseMessageModule } from '../../common/util/response-message/response-message.module';
+import { SelectModule } from 'ng2-select';
 
 const routes: Routes = [
 
@@ -29,6 +30,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     ResponseMessageModule,
     DataTableModule,
+    SelectModule,
     ToastModule.forRoot(),
     TranslateModule.forChild({
       loader: {

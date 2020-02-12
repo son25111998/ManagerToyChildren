@@ -3,8 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-
-import { Device } from './device';
+import { Category } from './category';
 import { Router } from '@angular/router';
 import { concatStatic } from 'rxjs/operator/concat';
 import { CommonService } from '../../common/util/common-service/common.service';
@@ -16,10 +15,9 @@ import { HeaderValue } from '../../common/util/header-value';
  * Examine the handling  of business requirements with Country module
  */
 @Injectable()
-export class DeviceService extends CommonService {
-
+export class CategoryService extends CommonService {
     /**  the api url */
-    DeviceApi = Constants.BASE_URL + "/device-management/managed-devices";
+    ClassroomApi = Constants.BASE_URL + "/category-management/managed-category";
 
     constructor(
         private http: Http,
@@ -32,15 +30,15 @@ export class DeviceService extends CommonService {
      * @description create a new country
      * @param country the new country
      */
-    create(device: Device): Promise<any> {
+    create(classroom: Category): Promise<any> {
         // amphitheater.status = "1";
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.post(this.DeviceApi,
-            device, { headers: secureHeaders })
+        var promise = this.http.post(this.ClassroomApi,
+            classroom, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -53,14 +51,14 @@ export class DeviceService extends CommonService {
      * @description update a country
      * @param country the new country
      */
-    update(device: Device): Promise<any> {
+    update(classroom: Category): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.put(this.DeviceApi,
-            device, { headers: secureHeaders })
+        var promise = this.http.put(this.ClassroomApi,
+            classroom, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -79,7 +77,7 @@ export class DeviceService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.delete(this.DeviceApi + "/delete-all/" + entityIds, { headers: secureHeaders })
+        var promise = this.http.delete(this.ClassroomApi + "/delete-all/" + entityIds, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -93,13 +91,13 @@ export class DeviceService extends CommonService {
    * @param country the search restriction
    * @param page the paging restriction
    */
-    getPageDevice(device: Device, page: number): Promise<any> {
+    getPageClassroom(page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
-        // secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.DeviceApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
+        var promise = this.http.get(this.ClassroomApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -107,16 +105,13 @@ export class DeviceService extends CommonService {
             });
         return promise;
     }
-
-    /**
-     * @description Returns a list of entities
-     */
     getListClassroom(): Promise<any> {
+        debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.DeviceApi+"/all", { headers: secureHeaders })
+        var promise = this.http.get(this.ClassroomApi + "/all", { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -135,7 +130,7 @@ export class DeviceService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.DeviceApi + "/find-one/" + id, { headers: secureHeaders })
+        var promise = this.http.get(this.ClassroomApi + "/find-id/" + id, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -144,9 +139,7 @@ export class DeviceService extends CommonService {
         return promise;
     }
 
-
-
-    advanceSearch(device: Device, page: number): Promise<any> {
+    advanceSearch(classroom: Category, page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         let secureHeaders = new Headers();
@@ -154,7 +147,7 @@ export class DeviceService extends CommonService {
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
         debugger;
-        var promise = this.http.post(this.DeviceApi + "/advance-search?page=" + page+ "&size=" + Constants.PAGE_SIZE, device, { headers: secureHeaders })
+        var promise = this.http.post(this.ClassroomApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE, classroom, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -163,34 +156,5 @@ export class DeviceService extends CommonService {
         return promise;
     }
 
-    getListDeviceById(idDevice: number): Promise<any> {
-        debugger
-        let accessToken = this.getAccessToken();
-        var secureHeaders = new Headers();
-        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
-        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.DeviceApi + "/" + idDevice , { headers: secureHeaders })
-            .toPromise()
-            .then(response => response.json() as any)
-            .catch(error => {
-                return this.handleError(error);
-            });
-        return promise;
-    }
-
-    findClassromByDevice(id: Number) :Promise<any> {
-        debugger
-        let accessToken = this.getAccessToken();
-        var secureHeaders = new Headers();
-        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
-        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.DeviceApi + "/" + id , { headers: secureHeaders })
-            .toPromise()
-            .then(response => response.json() as any)
-            .catch(error => {
-                return this.handleError(error);
-            });
-        return promise;
-    }
 
 }

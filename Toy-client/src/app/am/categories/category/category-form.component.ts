@@ -1,21 +1,21 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Classroom } from './classroom';
-import { Device } from '../device/device';
+import { Category } from './category';
+
 import { Product } from '../product/product';
 import { Constants } from '../../common/util/constants';
 
 /**
  * @description: Define the country form. Use for enter data of the country object
  */
-export class ClassroomForm {
+export class CategoryForm {
     /**
      * @description Define the country form
      * @param fb
      */
-    static classroomForm(fb: FormBuilder, business: string): FormGroup {
-        var classroomForm: FormGroup;
+    static categoryForm(fb: FormBuilder, business: string): FormGroup {
+        var categoryForm: FormGroup;
 
-        classroomForm = fb.group({
+        categoryForm = fb.group({
             // id: 0,
             idClassroom: "",
 
@@ -77,7 +77,7 @@ export class ClassroomForm {
                 Validators.pattern(Constants.NAME_PATTERN)
             ])],
         });
-        return classroomForm;
+        return categoryForm;
     }
 
     /**
@@ -85,22 +85,22 @@ export class ClassroomForm {
      * @param countryForm : country form
      * @param country : Data used to set up for form
      */
-    static bindingData(classroomForm: FormGroup, Classroom: Classroom) {
+    static bindingData(categoryForm: FormGroup, category: Category) {
         debugger
-        classroomForm.patchValue({
-            idClassroom: Classroom.idClassroom,
-            amphitheater: Classroom.amphitheater,
-            // staffInCharge: Classroom.staffInCharge,
-            symbol: Classroom.symbol,
-            nameClassroom: Classroom.nameClassroom,
-            amount: Classroom.amount,
-            size: Classroom.size,
-            chucNang: Classroom.chucNang,
-            creationTime: Classroom.createTime,
-            createdBy: Classroom.createdBy,
-            updateTime: Classroom.updateTime,
-            updatedBy: Classroom.updatedBy,
-            statuss: Classroom.statuss,
+        categoryForm.patchValue({
+            // idClassroom: Category.idCateg,
+            // // amphitheater: Category.amphitheater,
+            // // // staffInCharge: Classroom.staffInCharge,
+            // // symbol: Category.symbol,
+            // nameClassroom: Category.nameClassroom,
+            // amount: Category.amount,
+            // size: Category.size,
+            // chucNang: Category.chucNang,
+            // creationTime: Category.createTime,
+            // createdBy: Category.createdBy,
+            // updateTime: Classroom.updateTime,
+            // updatedBy: Category.updatedBy,
+            // statuss: Category.statuss,
         });
 
     }

@@ -8,52 +8,52 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Toast } from 'ng2-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { browser } from 'protractor';
-import { DeviceService } from '../device.service';
-import { DeviceForm } from '../device-form.component';
-import { Device } from '../device';
-import { ClassroomService } from '../../classroom/classroom.service'
+import { ManufacturerService } from '../manufacturer.service';
+import { ManufacturerForm } from '../manufacturer-form.component';
+import { Manufacturer } from '../Manufacturer';
+import { CategoryService } from '../../category/category.service'
 import { ProductService } from '../../product/product.service';
 import { Product } from '../../product/product';
 import { Action } from 'rxjs/scheduler/Action';
 import { Constants } from '../../../common/util/constants';
 
 @Component({
-  selector: 'app-Device-business',
-  templateUrl: './Device-business.component.html',
-  providers: [DeviceService, ProductService, ClassroomService]
+  selector: 'app-manufacturer-business',
+  templateUrl: './manufacturer-business.component.html',
+  providers: [ManufacturerService, ProductService, CategoryService]
 })
 
 /**
  * @description: Component management create, update
  */
-export class DeviceBusinessComponent implements OnInit {
+export class ManufacturerBusinessComponent implements OnInit {
   private sub: any;
   /**the id of object */
   id: number;
   idDevice: number;
-  amphitheater: Product;
+  product: Product;
   /** the name of business */
   business: string;
   /** the form object */
-  DeviceForm: FormGroup;
-  Device: Device;
-  AmphitheaterService: ProductService;
+  ManufacturerForm: FormGroup;
+  manufacturer: Manufacturer;
+  productService: ProductService;
   isUpdate: boolean = true;
-  listAmphitheater = null;
-  indexAmphitheaterSelection = null;
-  amphitheaterSelections = null;
-  listClassroom = null;
-  indexClassroomSelection = null;
-  classroomSelections = null;
+  listProduct = null;
+  indexProductrSelection = null;
+  productSelections = null;
+  listCategory = null;
+  indexCategorySelection = null;
+  categorySelections = null;
   listStatus = Constants.STATUS_LIST;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private deviceService: DeviceService,
+    private manufacturerService: ManufacturerService,
     private fb: FormBuilder,
     private translate: TranslateService,
-    private classroomService: ClassroomService,
+    private categoryService: CategoryService,
     private amphitheaterService: ProductService,
     public toastr: ToastsManager, vcr: ViewContainerRef
   ) {
@@ -66,7 +66,7 @@ export class DeviceBusinessComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.business = params['business'];
-      this.DeviceForm = DeviceForm.DeviceForm(this.fb, this.business);
+      this.ManufacturerForm = ManufacturerForm.ManufacturerForm(this.fb, this.business);
       if (this.business == 'create') {
         debugger
         this.isUpdate = false;
@@ -76,7 +76,7 @@ export class DeviceBusinessComponent implements OnInit {
       if (this.business == 'update') {
         this.isUpdate = true;
         this.getListClassroom();
-        this.bindingData(this.DeviceForm, this.id);
+        this.bindingData(this.ManufacturerForm, this.id);
       }
     });
   }
@@ -85,7 +85,7 @@ export class DeviceBusinessComponent implements OnInit {
     try {
       var old;
       if(type == "name") {
-        old = this.Device.nameDeivce;
+        old = this.manufacturer.name;
       }
       if(old != thenew && old == this.standardized(thenew, type)) {
         return false;
@@ -104,12 +104,12 @@ export class DeviceBusinessComponent implements OnInit {
   }
 
 
-  bindingData(deviceForm, id) {
-    this.deviceService.findOne(id)
+  bindingData(manufacturerForm, id) {
+    this.manufacturerService.findOne(id)
     .then(response => {
       debugger
-      this.Device = JSON.parse(JSON.stringify(response.data));
-      DeviceForm.bindingData(deviceForm, this.Device);
+      this.manufacturer = JSON.parse(JSON.stringify(response.data));
+      ManufacturerForm.bindingData(manufacturerForm, this.manufacturer);
       // this.getListAmphitheater();
       this.getListClassroom();
       })
@@ -136,7 +136,7 @@ export class DeviceBusinessComponent implements OnInit {
    */
   private createClassroom(Device) {
 
-    this.deviceService.create(Device)
+    this.manufacturerService.create(Device)
     .then(response => {
       debugger
         this.getListClassroom();
@@ -161,7 +161,7 @@ export class DeviceBusinessComponent implements OnInit {
    * @param Province
    */
   private updateDevice(Device) {
-    this.deviceService.update(Device)
+    this.manufacturerService.update(Device)
       .then(response => {
         // this.getListAmphitheater();
         this.goBack();
@@ -186,26 +186,26 @@ export class DeviceBusinessComponent implements OnInit {
   isValidForm() {
 
     // check Province name is valid
-    if (this.DeviceForm.get('nameDevice').invalid) {
-      if (this.DeviceForm.get('nameDevice').errors.required) {
+    if (this.ManufacturerForm.get('name').invalid) {
+      if (this.ManufacturerForm.get('name').errors.required) {
         return false;
       }
-      if (this.DeviceForm.get('nameDevice').errors.pattern != null) {
+      if (this.ManufacturerForm.get('name').errors.pattern != null) {
         return false;
       }
-      if (this.DeviceForm.get('nameDevice').errors.maxlength != null) {
+      if (this.ManufacturerForm.get('name').errors.maxlength != null) {
         return false;
       }
     }
     // check Province name is valid
-    if (this.DeviceForm.get('amount').invalid) {
-      if (this.DeviceForm.get('amount').errors.required) {
+    if (this.ManufacturerForm.get('amount').invalid) {
+      if (this.ManufacturerForm.get('amount').errors.required) {
         return false;
       }
-      if (this.DeviceForm.get('amount').errors.pattern != null) {
+      if (this.ManufacturerForm.get('amount').errors.pattern != null) {
         return false;
       }
-      if (this.DeviceForm.get('amount').errors.maxlength != null) {
+      if (this.ManufacturerForm.get('amount').errors.maxlength != null) {
         return false;
       }
     }
@@ -214,9 +214,9 @@ export class DeviceBusinessComponent implements OnInit {
   }
 
   private getListClassroom() {
-    this.classroomService.getListClassroom()
+    this.categoryService.getListClassroom()
         .then(response => {
-            this.listClassroom = response.data;
+            this.listCategory = response.data;
 
             this.initializeClassroomSelection(0);
 
@@ -230,34 +230,34 @@ private initializeClassroomSelection(selectItem: number) {
     debugger
     let classroom_datas = []
     var countItems = 0;
-    if (this.listClassroom) {
-        this.listClassroom.forEach(element => {
+    if (this.listCategory) {
+        this.listCategory.forEach(element => {
             var item = {
                 id: null, text: null
             };
             item.text = element.nameClassroom
             item.id = element.idClassroom;
             classroom_datas.push(item)
-            if (this.Device != undefined && this.Device != null && item.id == this.Device.classroom.idClassroom) {
+            if (this.manufacturer != undefined && this.manufacturer != null ) {
                 // this.indexPolicySelection = countItems;
-                this.indexClassroomSelection = countItems
+                this.indexCategorySelection = countItems
             }
             countItems += 1
         });
     }
-    this.classroomSelections = classroom_datas
-    console.log(this.classroomSelections)
+    this.categorySelections = classroom_datas
+    console.log(this.categorySelections)
 }
 
 classroomChanged(id: number) {
     // this.ClassroomForm.get('classroom').setValue(new Classroom())
     debugger
-    this.DeviceForm.get('classroom.idClassroom').setValue(id)
+    this.ManufacturerForm.get('classroom.idClassroom').setValue(id)
     if (!id) {
         debugger
-        this.listClassroom = []
-        this.classroomSelections = []
-        this.indexClassroomSelection = 0
+        this.listCategory = []
+        this.categorySelections = []
+        this.indexCategorySelection = 0
         this.classroomChanged(0)
     } else {
         // this.getListClassroom()
@@ -266,8 +266,8 @@ classroomChanged(id: number) {
 }
 
 public refreshPolicyValue(value: any): void {
-    this.indexClassroomSelection = null;
-    this.DeviceForm.get('classRoom.idClassroom').setValue(null);
+    this.indexCategorySelection = null;
+    this.ManufacturerForm.get('classRoom.idClassroom').setValue(null);
 }
 
   /**

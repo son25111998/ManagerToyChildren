@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DeviceForm } from './device-form.component';
+import { CategoryForm } from './category-form.component';
 
-import { DeviceService } from './device.service';
+import { CategoryService } from './category.service';
 
 import { DataTable } from 'angular2-datatable';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -12,32 +12,31 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
 import { stat } from 'fs';
-import { Classroom } from '../classroom/classroom';
-import { from } from 'rxjs/observable/from';
-import { Device } from './device';
+import { Category } from './category';
 import { DialogService } from '../../common/dialog/dialog.service';
 import { PageInfo } from '../../common/util/page-info';
 import { Constants } from '../../common/util/constants';
-import { DevicePageInfo } from './DevicePageInfo';
+import { CategoryPageInfo } from './CategoryPageInfo';
 
 @Component({
-    selector: 'app-device-list',
-    templateUrl: './device-list.component.html',
-    providers: [Device, DialogService, DataTable, DeviceService]
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    providers: [Category, DialogService, DataTable, CategoryService]
 })
 /**
  * @description: Display the list of countries and supports search, delete objects
  */
-export class DeviceListComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
 
-    deviceInfo: DevicePageInfo;
+    categoryPageInfo: CategoryPageInfo
     // name: Amphitheater.nameAmphitheater;
+    categorys: Category[];
     currentPage = 0;
     filterForm: FormGroup;
     // search restriction
-    searchObject: Device;
+    searchObject: Category;
     checkAllItemFlag = false;
-    currentPageView: number = 0;
+    currentPageView: number;
     fromElement: number;
     toElement: number;
     // total page
@@ -47,33 +46,17 @@ export class DeviceListComponent implements OnInit {
     // toal elements
     totalElements: number;
     numberDeleteItems = 0;
-    id: number;
-    deviceId: number;
-    /** the name of business */
-    business: string;
-    Classroom: Classroom
-    /** the form object */
-    DeviceForm: FormGroup;
-    Device: Device;
-    isUpdate: boolean = true;
-    listAmphitheater = null;
-    indexClassroomSelection = null;
-    amphitheaterSelections = null;
-    listClassroom = null;
-    classroomSelections = null;
-
 
     listStatus = Constants.STATUS_LIST;
 
     // list amphitheater to export file excel
-    devices: Device[];
     fromNumber: number;
     toNumber: number;
-    filterObject: Device;
-    switchGetDevice: boolean;
+    filterObject: Category;
+    switchGetClassroom: boolean;
 
     constructor(
-        private deviceService: DeviceService,
+        private categoryService: CategoryService,
         // private exportExcelService: ExcelExportService,
         private dialogService: DialogService,
         private fb: FormBuilder,
@@ -89,9 +72,9 @@ export class DeviceListComponent implements OnInit {
 
     ngOnInit() {
 
-        this.filterForm = DeviceForm.DeviceForm(this.fb, '');
-        this.searchObject = new Device();
-        this.getPageDevice(this.searchObject, this.currentPage);
+        this.filterForm = CategoryForm.categoryForm(this.fb, '');
+        this.searchObject = new Category();
+        this.getPageClassroom(this.currentPage);
         new PageInfo();
     }
 
@@ -100,18 +83,17 @@ export class DeviceListComponent implements OnInit {
      * @param country: the search restriction
      * @param page: the paging restriction
      */
-    getPageDevice(device: Device, page: number) {
-        this.searchObject = device;
+    getPageClassroom(currentPage: number) {
         debugger
-        this.deviceService.getPageDevice(device, page)
-            .then(response => {
-                debugger
-                this.deviceInfo = response.data;
-                console.log(this.deviceInfo)
-                this.devices = this.deviceInfo.content;
-                this.pageLength = this.deviceInfo.content.length;
-                this.totalElements = this.deviceInfo.totalElements;
-                this.totalPages = this.deviceInfo.totalPages;
+        this.categoryService
+            .getPageClassroom(currentPage)
+            .then(
+                categoryInfo => {
+                this.categoryPageInfo = categoryInfo.data;
+                this.categorys = this.categoryPageInfo.content;
+                this.pageLength = this.categoryPageInfo.content.length;
+                this.totalElements = this.categoryPageInfo.totalElements;
+                this.totalPages = this.categoryPageInfo.totalPages;
                 if (!(this.totalPages > 0)) {
                     this.currentPage = -1;
                 }
@@ -120,14 +102,10 @@ export class DeviceListComponent implements OnInit {
                 this.countNumberDeleteItems();
             }).catch(
                 error => {
-                    console.log("no ok");
                     console.log(error);
                 });
     }
 
-    getNumberDeleteItems(): number {
-        return this.numberDeleteItems;
-    }
     /**
      * @description: Manage page transfers
      * @param page: Page will move to
@@ -162,7 +140,7 @@ export class DeviceListComponent implements OnInit {
         if (flag == true) {
 
             this.currentPage = pageNumber;
-            this.getPageDevice(this.searchObject, this.currentPage);
+            this.getPageClassroom(this.currentPage);
             // page.value = pageNumber + 1;
         }
     }
@@ -170,13 +148,13 @@ export class DeviceListComponent implements OnInit {
     // set the information of the page
     private setCurrentPage() {
         debugger;
-        if (this.deviceInfo.numberOfElements > 0) {
-            this.currentPageView = this.deviceInfo.number + 1;
+        if (this.categoryPageInfo.numberOfElements > 0) {
+            this.currentPageView = this.categoryPageInfo.number + 1;
         } else {
             this.currentPageView = 0;
         }
-        var numberOfElements = this.deviceInfo.numberOfElements;
-        var size = this.deviceInfo.size;
+        var numberOfElements = this.categoryPageInfo.numberOfElements;
+        var size = this.categoryPageInfo.size;
         this.fromNumber = (this.currentPageView - 1) * size + 1;
         this.toNumber = (this.currentPageView - 1) * size + numberOfElements;
         if (this.toNumber < 1) {
@@ -194,7 +172,7 @@ export class DeviceListComponent implements OnInit {
             .confirm('Confirm Information', 'Are you sure to delete?')
             .subscribe(response => {
                 if (response == true) {
-                    this.deviceService.deleteClassroomsById(entityIds)
+                    this.categoryService.deleteClassroomsById(entityIds)
                         .then(response => {
                             let message;
                             if (response.code == 200) {
@@ -219,7 +197,7 @@ export class DeviceListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageDevice(this.searchObject, this.currentPage);
+                            this.getPageClassroom(this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -253,7 +231,7 @@ export class DeviceListComponent implements OnInit {
      */
     checkAllItem() {
         this.checkAllItemFlag = !this.checkAllItemFlag;
-        this.deviceInfo.content.forEach(item => {
+        this.categoryPageInfo.content.forEach(item => {
             item.checked = this.checkAllItemFlag;
         });
     }
@@ -264,16 +242,16 @@ export class DeviceListComponent implements OnInit {
      */
     deleteCheckedItems() {
       var entityIds = [];
-      this.devices.forEach(item => {
+      this.categorys.forEach(item => {
           if (item.checked == true) {
-              entityIds.push(item.idDevice);
+              entityIds.push(item.id);
           }
       });
       if (entityIds.length > 0) {
           this.dialogService.confirm('Confirm Information', 'Are you sure to delete?')
               .subscribe(response => {
                   if (response == true) {
-                      this.deviceService.deleteClassroomsById(entityIds)
+                      this.categoryService.deleteClassroomsById(entityIds)
                           .then(response => {
                               let message;
                               if (response.code == 200) {
@@ -298,7 +276,7 @@ export class DeviceListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageDevice(this.searchObject, this.currentPage);
+                            this.getPageClassroom(this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -316,12 +294,13 @@ export class DeviceListComponent implements OnInit {
               })
       }
   }
+
     /**
      * Count the number of objects checked
     */
     countNumberDeleteItems() {
         this.numberDeleteItems = 0;
-        this.deviceInfo.content.forEach(item => {
+        this.categoryPageInfo.content.forEach(item => {
             if (item.checked) {
                 this.numberDeleteItems += 1;
             }
@@ -336,19 +315,18 @@ export class DeviceListComponent implements OnInit {
     //     var isAuthorizied = this.authGuardSubmenu.isAuthoriziedWithCurrentUrl(this.router.url);
     //     return isAuthorizied;
     // }
-
-    search(device: Device, page: number) {
-        this.filterObject = device;
-        this.switchGetDevice = true;
+    search(classroom: Category, page: number) {
+        this.filterObject = classroom;
+        this.switchGetClassroom = true;
         debugger;
-        this.deviceService.advanceSearch(device, page)
-            .then(deviceInfo => {
+        this.categoryService.advanceSearch(classroom, page)
+            .then(classroomInfo => {
                 debugger;
-                this.deviceInfo = deviceInfo.data;
-                this.devices = this.deviceInfo.content;
-                this.pageLength = this.deviceInfo.content.length;
-                this.totalElements = this.deviceInfo.totalElements;
-                this.totalPages = this.deviceInfo.totalPages;
+                this.categoryPageInfo = classroomInfo.data;
+                this.categorys = this.categoryPageInfo.content;
+                this.pageLength = this.categoryPageInfo.content.length;
+                this.totalElements = this.categoryPageInfo.totalElements;
+                this.totalPages = this.categoryPageInfo.totalPages;
                 if (this.totalPages > 0) {
                     this.currentPage = -1;
                 }
@@ -360,5 +338,21 @@ export class DeviceListComponent implements OnInit {
             });
     }
 
+    routerLinkUpdate(type) {
+        debugger
+        if (type == 'create2') {
+            this.router.navigate(['/classroom/create2']);
+        } else {
+            this.categoryPageInfo.content.forEach(item => {
+                if (item.checked == true) {
+                    debugger
+                    this.router.navigate(['/classroom/' + type, item.id]);
+                }
+            });
+        }
+    }
+    getNumberDeleteItems(): number {
+        return this.numberDeleteItems;
+    }
 
 }
