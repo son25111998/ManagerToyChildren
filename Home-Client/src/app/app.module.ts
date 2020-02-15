@@ -15,6 +15,8 @@ import { ContactComponent } from './contact/contact.component';
 import { BlogSingleComponent } from './blog-single/blog-single.component';
 import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
+import { HeaderHomeComponent } from './header-home/header-home.component';
+import { FooterHomeComponent } from './footer-home/footer-home.component';
 
 @NgModule({
   declarations: [
@@ -28,20 +30,22 @@ import { AboutComponent } from './about/about.component';
     ContactComponent,
     BlogSingleComponent,
     BlogComponent,
-    AboutComponent
+    AboutComponent,
+    HeaderHomeComponent,
+    FooterHomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'cities', pathMatch: 'full' },
-      { path: 'cities', component: CitiesComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      // { path: 'cities', component: CitiesComponent },
       { path: 'home', component: HomepageComponent },
       { path: 'cart', component: ShoppingCartComponent },
-      { path: 'shop', component: ShoppingCartComponent },
+      { path: 'shop', component: ShopComponent },
       { path: 'singleproduct', component: ShoppingCartComponent },
-      { path: 'checkout', component: ShoppingCartComponent }
+      { path: 'checkout', component: ProductSingleComponent }
 
     ])
   ],
