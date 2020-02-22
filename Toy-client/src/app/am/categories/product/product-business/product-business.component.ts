@@ -14,12 +14,14 @@ import { Constants } from '../../../common/util/constants';
 import { ProductForm } from '../product-form.component';
 import { ProductService } from '../product.service';
 import { CategoryService } from '../../category/category.service';
+import { ManufacturerService } from '../../manufacturer/manufacturer.service';
+import { Manufacturer } from '../../manufacturer/Manufacturer';
 import { Category } from '../../category/category';
 declare var $;
 @Component({
   selector: 'app-product-business',
   templateUrl: './product-business.component.html',
-  providers: [ProductService, CategoryService]
+  providers: [ProductService, CategoryService,ManufacturerService]
 })
 
 /**
@@ -38,6 +40,11 @@ export class ProductBusinessComponent implements OnInit {
   indexManufactererSelection: number;
   categorySelections: Array<any> = [];
   manufacturerSelections: Array<any> = [];
+  codeManfacture: string;
+  product: Product;
+  listCategory: Category[]
+  listManfacturer: Manufacturer[]
+  
 
   isUpdate: boolean = true;
 
@@ -48,6 +55,7 @@ export class ProductBusinessComponent implements OnInit {
     private location: Location,
     private productService: ProductService,
     private categoryService: CategoryService,
+    private manufacturerService: ManufacturerService,
     private fb: FormBuilder,
     private translate: TranslateService,
     public toastr: ToastsManager, vcr: ViewContainerRef
@@ -58,6 +66,7 @@ export class ProductBusinessComponent implements OnInit {
   ngOnInit() {
     // Lấy bản ghi theo 'id' từ @PathParam
     this.getListCategory();
+    this.getListManfacture();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       this.business = params['business'];
@@ -93,10 +102,63 @@ export class ProductBusinessComponent implements OnInit {
     }
     return thenew;
   }
-  product: Product;
-  listCategory: Category[]
+
+  private getListManfacture() {
+    this.manufacturerService.getListManufacturer()
+      .then(response => {
+        console.log("cate", response.data)
+        console.log("id", response.data.id)
+        this.listCategory = response.data;
+        if (this.product && this.product.manfacturer) {
+          this.initializeManfacturerSelection(this.product.manfacturer.id);
+
+        } else {
+          this.initializeManfacturerSelection(0);
+        }
+
+      }).catch(error => {
+        console.log(error)
+      });
+  }
+
+  private initializeManfacturerSelection(selectItem: number) {
+    let manfacturer_datas = []
+    var countItems = 0;
+    if (this.listCategory) {
+      this.listCategory.forEach(element => {
+        console.log(element);
+        var item = {
+          id: null, text: null
+        };
+        item.text = element.name;
+        item.id = element.id;
+        manfacturer_datas.push(item)
+        if (item.id == selectItem) {
+          this.indexManufactererSelection = countItems
+        }
+        countItems += 1
+      });
+    }
+    this.manufacturerSelections = manfacturer_datas
+    console.log(this.manufacturerSelections)
+  }
+
+  manfacturerChanged(id: number) {
+    //debugger 
+    var id1: number
+    //this.ProductForm.get('province.id').setValue(id);
+    this.manufacturerService.findOne(id).then(response => {
+      this.codeManfacture = response.data.code;
+      console.log("Cáccs", response)
+      //this.ProductForm.get('categoryId').setValue(this.codeCategory)
+    }).catch(error => {
+      console.log(error)
+    });
+
+  }
+
   private getListCategory() {
-    this.categoryService.getListClassroom()
+    this.categoryService.getListCategory()
       .then(response => {
         console.log("cate", response.data)
         console.log("id", response.data.id)
@@ -112,6 +174,9 @@ export class ProductBusinessComponent implements OnInit {
         console.log(error)
       });
   }
+
+
+
 
   private initializeCategorySelection(selectItem: number) {
     let category_datas = []
@@ -180,6 +245,7 @@ export class ProductBusinessComponent implements OnInit {
    */
   private createProduct(Product) {
     debugger
+    //this.productService.createApiImage(this.apiFile);
     this.productService.create(Product)
       .then(response => {
         this.goBack();
@@ -228,14 +294,14 @@ export class ProductBusinessComponent implements OnInit {
   isValidForm() {
 
     // check Province name is valid
-    if (this.ProductForm.get('nameProduct').invalid) {
-      if (this.ProductForm.get('nameProduct').errors.required) {
+    if (this.ProductForm.get('name').invalid) {
+      if (this.ProductForm.get('name').errors.required) {
         return false;
       }
-      if (this.ProductForm.get('nameProduct').errors.pattern != null) {
+      if (this.ProductForm.get('name').errors.pattern != null) {
         return false;
       }
-      if (this.ProductForm.get('nameProduct').errors.maxlength != null) {
+      if (this.ProductForm.get('name').errors.maxlength != null) {
         return false;
       }
     }

@@ -17,6 +17,8 @@ import { BlogComponent } from './blog/blog.component';
 import { AboutComponent } from './about/about.component';
 import { HeaderHomeComponent } from './header-home/header-home.component';
 import { FooterHomeComponent } from './footer-home/footer-home.component';
+import { ProductserviceService } from './homepage/productservice.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,12 +34,14 @@ import { FooterHomeComponent } from './footer-home/footer-home.component';
     BlogComponent,
     AboutComponent,
     HeaderHomeComponent,
-    FooterHomeComponent
+    FooterHomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       // { path: 'cities', component: CitiesComponent },
@@ -49,7 +53,7 @@ import { FooterHomeComponent } from './footer-home/footer-home.component';
 
     ])
   ],
-  providers: [],
+  providers: [ProductserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

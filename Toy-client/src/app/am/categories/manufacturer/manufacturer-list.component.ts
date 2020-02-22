@@ -103,7 +103,7 @@ export class ManufacturerListComponent implements OnInit {
     getPageManufacturer(manufacturer: Manufacturer, page: number) {
         this.searchObject = manufacturer;
         debugger
-        this.manufacturerService.getPageDevice(manufacturer, page)
+        this.manufacturerService.getPageManufacturer(manufacturer, page)
             .then(response => {
                 debugger
                 this.manufacturerPageInfo = response.data;
@@ -194,7 +194,7 @@ export class ManufacturerListComponent implements OnInit {
             .confirm('Confirm Information', 'Are you sure to delete?')
             .subscribe(response => {
                 if (response == true) {
-                    this.manufacturerService.deleteClassroomsById(entityIds)
+                    this.manufacturerService.deleteManufacturerById(entityIds)
                         .then(response => {
                             let message;
                             if (response.code == 200) {
@@ -273,7 +273,7 @@ export class ManufacturerListComponent implements OnInit {
           this.dialogService.confirm('Confirm Information', 'Are you sure to delete?')
               .subscribe(response => {
                   if (response == true) {
-                      this.manufacturerService.deleteClassroomsById(entityIds)
+                      this.manufacturerService.deleteManufacturerById(entityIds)
                           .then(response => {
                               let message;
                               if (response.code == 200) {

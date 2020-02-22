@@ -91,7 +91,7 @@ export class CategoryService extends CommonService {
    * @param country the search restriction
    * @param page the paging restriction
    */
-    getPageClassroom(page: number): Promise<any> {
+    getPageCategory(page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
@@ -105,7 +105,7 @@ export class CategoryService extends CommonService {
             });
         return promise;
     }
-    getListClassroom(): Promise<any> {
+    getListCategory(): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();

@@ -25,9 +25,9 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="nameProduct">{{ 'Product.Name' | translate }}</label>
+                        <label class="control-label col-md-4" for="name">{{ 'Product.Name' | translate }}</label>
                         <div class="col-md-8">
-                          <input id="nameProduct" type="text" class="form-control" placeholder="{{ 'Product.Name' | translate }}" formControlName="nameProduct">
+                          <input id="name" type="text" class="form-control" placeholder="{{ 'Product.Name' | translate }}" formControlName="name">
                         </div>
                       </div>
                     </div>
@@ -63,7 +63,7 @@
                   </div>
                 </th>
                 <th>
-                  <mfDefaultSorter by="nameAmphitheater">{{ 'Product.Name' | translate }}</mfDefaultSorter>
+                  <mfDefaultSorter by="name">{{ 'Product.Name' | translate }}</mfDefaultSorter>
                 </th>
                 <th>
                   <mfDefaultSorter by="createTime">{{ 'Product.Price' | translate }}</mfDefaultSorter>
@@ -103,15 +103,15 @@
                 <td>{{item.createTime | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.status==1?'Active':'Inactive'}}</td>
                 <td text-align="center">
-                  <a class="btn btn-icon-only blue" title="{{ 'Common.Detail' | translate }}" id="business-btn" [routerLink]="['/amphitheater/detail', item.idAmphitheater]"><i class="fa fa-info" aria-hidden="true"></i></a>
+                  <a class="btn btn-icon-only blue" title="{{ 'Common.Detail' | translate }}" id="business-btn" [routerLink]="['/product/detail', item.id]"><i class="fa fa-info" aria-hidden="true"></i></a>
                   <!-- <a *ngIf="isAuthoriziedNavigation()" class="btn btn-icon-only green" title="{{ 'Common.Update' | translate }}" id="business-btn" -->
                   <a  class="btn btn-icon-only green" title="{{ 'Common.Update' | translate }}" id="business-btn"
 
-                    [routerLink]="['/amphitheater', 'update', item.idAmphitheater]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    [routerLink]="['/product', 'update', item.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                   <!-- <a *ngIf="isAuthoriziedNavigation()" class="btn btn-icon-only red" title="{{ 'Common.Delete' | translate }}" id="business-btn" -->
                   <a  class="btn btn-icon-only red" title="{{ 'Common.Delete' | translate }}" id="business-btn"
 
-                    (click)="deleteOneItem(item.idAmphitheater)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    (click)="deleteOneItem(item.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </td>
               </tr>
             </tbody>

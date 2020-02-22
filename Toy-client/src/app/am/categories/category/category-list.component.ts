@@ -86,7 +86,7 @@ export class CategoryListComponent implements OnInit {
     getPageClassroom(currentPage: number) {
         debugger
         this.categoryService
-            .getPageClassroom(currentPage)
+            .getPageCategory(currentPage)
             .then(
                 categoryInfo => {
                 this.categoryPageInfo = categoryInfo.data;

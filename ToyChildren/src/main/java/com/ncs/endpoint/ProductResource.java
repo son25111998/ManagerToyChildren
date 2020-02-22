@@ -1,6 +1,8 @@
 package com.ncs.endpoint;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ncs.common.ResponseData;
 import com.ncs.common.constants.Constants;
 import com.ncs.common.util.Result;
 import com.ncs.dto.ServiceResponse;
@@ -37,12 +45,12 @@ public class ProductResource {
 	@Autowired
 	private ProductService productService;
 
-	@GetMapping(value = "/product-management/managed-amphitheater/search/{name}/{status}", produces = {
+	@GetMapping(value = "/product-management/managed-product/search/{name}/{status}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Page<ProductEntity>> searchAllProduct(@PathVariable String name,
+	ResponseData<Page<ProductEntity>> searchAllProduct(@PathVariable String name,
 															  @PathVariable String status, Pageable pageable) {
-		ServiceResponse<Page<ProductEntity>> response = new ServiceResponse<>();
+		ResponseData<Page<ProductEntity>> response = new ResponseData<>();
 
 		Page<ProductEntity> products = null;
 
@@ -65,9 +73,9 @@ public class ProductResource {
 	@GetMapping(value = "/product-management/managed-product/search-name/{name}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Page<ProductEntity>> searchNameProduct(@PathVariable String name,
+	ResponseData<Page<ProductEntity>> searchNameProduct(@PathVariable String name,
                                                                Pageable pageable) {
-		ServiceResponse<Page<ProductEntity>> response = new ServiceResponse<>();
+		ResponseData<Page<ProductEntity>> response = new ResponseData<>();
 
 		Page<ProductEntity> products = null;
 
@@ -89,9 +97,9 @@ public class ProductResource {
 	@GetMapping(value = "/product-management/managed-product/search-status/{status}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Page<ProductEntity>> searchStatusProduct(@PathVariable String status,
+	ResponseData<Page<ProductEntity>> searchStatusProduct(@PathVariable String status,
                                                                  Pageable pageable) {
-		ServiceResponse<Page<ProductEntity>> response = new ServiceResponse<>();
+		ResponseData<Page<ProductEntity>> response = new ResponseData<>();
 
 		Page<ProductEntity> products = null;
 
@@ -113,8 +121,8 @@ public class ProductResource {
 	//select page db in amphitheater
 	@GetMapping(value = "/product-management/managed-product", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Page<ProductEntity>> getAllProduct(Pageable pageable) {
-		ServiceResponse<Page<ProductEntity>> response = new ServiceResponse<>();
+	ResponseData<Page<ProductEntity>> getAllProduct(Pageable pageable) {
+		ResponseData<Page<ProductEntity>> response = new ResponseData<>();
 
 		Page<ProductEntity> products = null;
 
@@ -137,8 +145,8 @@ public class ProductResource {
 	@PostMapping(value = "/product-management/managed-product", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Integer> create(@RequestBody ProductEntity products) {
-		ServiceResponse<Integer> response = new ServiceResponse<>();
+	ResponseData<Integer> create(@RequestBody ProductEntity products) {
+		ResponseData<Integer> response = new ResponseData<>();
 		try {
 			if (productService.create(products) == Constants.SUCCESS_CODE_FIELD_UNEXIST) {
 				response.setData(Constants.SUCCESS_CODE_FIELD_UNEXIST);
@@ -163,12 +171,30 @@ public class ProductResource {
 
 		return response;
 	}
+	@RequestMapping(value = "/product-management/managed-product/upload", method = RequestMethod.POST)
+	public ResponseEntity<ResponseData<Integer>> uploadImage(@RequestParam(name="file") MultipartFile file) {
+		String fileName = file.getOriginalFilename();
+		System.out.println("=========================================================================");
+		
+		//String path=context.getRealPath("/resources/templates");
+		File files  = new File("F:\\am_savis\\1.AM\\api-mngt-client\\src\\assets\\layouts\\layout\\img",  File.separator +fileName);
+		//File files  = new File(path,  File.separator +fileName);
+	    try {
+			file.transferTo(files);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    return new ResponseEntity<ResponseData<Integer>>(new ResponseData<>(), HttpStatus.CREATED);
+
+	}
     //test ok
 	// get all list Amphitheater
 	@GetMapping(value = "/product-management/managed-product/all", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<List<ProductEntity>> getListProduct() {
-		ServiceResponse<List<ProductEntity>> response = new ServiceResponse<>();
+	ResponseData<List<ProductEntity>> getListProduct() {
+		ResponseData<List<ProductEntity>> response = new ResponseData<>();
 
 		List<ProductEntity> product = null;
 
@@ -190,8 +216,8 @@ public class ProductResource {
 	@GetMapping(value = "/product-management/managed-product/find-id/{id}", produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<ProductEntity> findOne(@PathVariable("id") int id) {
-		ServiceResponse<ProductEntity> response = new ServiceResponse<>();
+	ResponseData<ProductEntity> findOne(@PathVariable("id") int id) {
+		ResponseData<ProductEntity> response = new ResponseData<>();
 
 		ProductEntity product = null;
 
@@ -216,10 +242,10 @@ public class ProductResource {
 	@PutMapping(value = "/product-management/managed-product", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Integer> update(@RequestBody ProductEntity amphitheaters) {
-		ServiceResponse<Integer> response = new ServiceResponse<>();
+	ResponseData<Integer> update(@RequestBody ProductEntity product) {
+		ResponseData<Integer> response = new ResponseData<>();
 		try {
-			if (productService.update(amphitheaters) == Constants.SUCCESS_CODE_FIELD_UNEXIST) {
+			if (productService.update(product) == Constants.SUCCESS_CODE_FIELD_UNEXIST) {
 				response.setData(Constants.SUCCESS_CODE_FIELD_UNEXIST);
 			} else {
 				response.setData(Constants.CAUTION_CODE_FIELD_EXISTED);
@@ -249,8 +275,8 @@ public class ProductResource {
 	@DeleteMapping(value = "/product-management/managed-product/delete/{id}", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Integer> delete(@PathVariable("id") int id) {
-		ServiceResponse<Integer> response = new ServiceResponse<>();
+	ResponseData<Integer> delete(@PathVariable("id") int id) {
+		ResponseData<Integer> response = new ResponseData<>();
 
 		int result = productService.delete(id);
 		if (result == 1) {
@@ -272,8 +298,8 @@ public class ProductResource {
 	@DeleteMapping(value = "/product-management/managed-product/delete-multiple/{entityids}", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Integer> deleteMultiple(@PathVariable("entityids") int[] entityIds) {
-		ServiceResponse<Integer> response = new ServiceResponse<>();
+	ResponseData<Integer> deleteMultiple(@PathVariable("entityids") int[] entityIds) {
+		ResponseData<Integer> response = new ResponseData<>();
 
 		List<ProductEntity> products = new ArrayList<ProductEntity>();
 		for (int i = 0; i < entityIds.length; i++) {
@@ -299,9 +325,9 @@ public class ProductResource {
 	@PostMapping(value = "/product-management/managed-product/advance-search", consumes = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public @ResponseBody
-	ServiceResponse<Page<ProductEntity>> search(@RequestBody ProductEntity product,
+	ResponseData<Page<ProductEntity>> search(@RequestBody ProductEntity product,
                                                Pageable pageable) {
-		ServiceResponse<Page<ProductEntity>> response = new ServiceResponse<>();
+		ResponseData<Page<ProductEntity>> response = new ResponseData<>();
 
 		Page<ProductEntity> products = null;
 

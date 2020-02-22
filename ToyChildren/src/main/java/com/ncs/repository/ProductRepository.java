@@ -23,7 +23,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 		@Query(value = "SELECT * FROM product WHERE statuss LIKE %:status%", nativeQuery = true)
         Page<ProductEntity> findStatusProduct(@Param("status") String status, Pageable pageable);
 
-		//ProductEntity findByIdProduct(int id);
+		ProductEntity findById(int id);
 
 	    Page<ProductEntity> findAll(Specification<ProductEntity> advanceFilter, Pageable pageable);
 

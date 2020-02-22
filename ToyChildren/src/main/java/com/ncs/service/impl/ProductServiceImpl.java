@@ -1,5 +1,6 @@
 package com.ncs.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.jboss.logging.Logger;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ncs.common.constants.CommonConstants;
 import com.ncs.entity.ProductEntity;
 import com.ncs.repository.ProductRepository;
 import com.ncs.service.ProductService;
@@ -40,9 +42,21 @@ public class ProductServiceImpl implements ProductService{
 			ProductEntity productsExisting = new ProductEntity();
 			productsExisting.setId(products.getId());
 			productsExisting.setName(products.getName());
-			//productsExisting.set(new Date());
-			//productsExisting.set(CommonConstants.DEFAULT_USER);
-			//productsExisting.setStatuss(amphitheaters.getStatuss());
+			productsExisting.setAmount(products.getAmount());
+			productsExisting.setDescription(products.getDescription());
+			productsExisting.setPrice(products.getPrice());
+			productsExisting.setLenght(products.getLenght());
+			productsExisting.setHeight(products.getHeight());
+			productsExisting.setWidth(products.getWidth());
+			productsExisting.setThumbai(products.getThumbai());
+			productsExisting.setCategoryId(products.getCategoryId());
+			productsExisting.setManufacturerId(products.getManufacturerId());
+			productsExisting.setCreateTime(new Date());
+			productsExisting.setUpdateTime(new Date());
+			productsExisting.setUpdatedBy(CommonConstants.DEFAULT_USER);
+			productsExisting.setCreatedBy(CommonConstants.DEFAULT_USER);
+			productsExisting.setStatus(1);
+
 
 			productRepository.save(productsExisting);
 			return 1;
@@ -67,7 +81,7 @@ public class ProductServiceImpl implements ProductService{
 	public ProductEntity findOne(int id) {
 		ProductEntity product = null;
 		try {
-			//product = productRepository.findByIdProduct(id);
+			product = productRepository.findById(id);
 		} catch (Exception e) {
 		
 			log.error(e.getMessage());
@@ -77,8 +91,20 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public int update(ProductEntity products) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			ProductEntity productsExisting = productRepository.getOne(products.getId());
+			productsExisting.setName(products.getName());
+			productsExisting.setStatus(products.getStatus());
+			productsExisting.setUpdateTime(new Date());
+			productsExisting.setUpdatedBy(CommonConstants.DEFAULT_USER);
+
+			productRepository.save(productsExisting);
+
+			return 1;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return 0;
+		}
 	}
 
 	@Override

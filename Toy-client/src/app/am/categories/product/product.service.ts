@@ -33,6 +33,22 @@ export class ProductService extends CommonService {
      * @description create a new country
      * @param country the new country
      */
+    createApiImage(file: File): Promise<any> {
+        debugger
+        let body = new FormData();
+        body.append("file", file);
+        let accessToken = this.getAccessToken();
+        var secureHeaders = new Headers();
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_FORM_URLENCODED_VALUE);
+        var promise = this.http.post(this.ProductApi + "/upload", body)
+          .toPromise()
+          .then(response => response.json() as any)
+          .catch(error => {
+            return this.handleError(error);
+          });
+        return promise;
+      }
     create(product: Product): Promise<any> {
         // amphitheater.status = "1";
         debugger

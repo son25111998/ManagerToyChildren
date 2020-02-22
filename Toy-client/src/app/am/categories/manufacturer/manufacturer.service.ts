@@ -73,7 +73,7 @@ export class ManufacturerService extends CommonService {
      * @description Delete a list countries
      * @param entityIds the list ids
      */
-    deleteClassroomsById(entityIds: number[]): Promise<any> {
+    deleteManufacturerById(entityIds: number[]): Promise<any> {
         debugger;
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
@@ -93,7 +93,7 @@ export class ManufacturerService extends CommonService {
    * @param country the search restriction
    * @param page the paging restriction
    */
-    getPageDevice(manufacturer: Manufacturer, page: number): Promise<any> {
+    getPageManufacturer(manufacturer: Manufacturer, page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
@@ -111,7 +111,7 @@ export class ManufacturerService extends CommonService {
     /**
      * @description Returns a list of entities
      */
-    getListClassroom(): Promise<any> {
+    getListManufacturer(): Promise<any> {
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
@@ -135,7 +135,7 @@ export class ManufacturerService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ManufacturerApi + "/find-one/" + id, { headers: secureHeaders })
+        var promise = this.http.get(this.ManufacturerApi + "/find-id/" + id, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -163,7 +163,7 @@ export class ManufacturerService extends CommonService {
         return promise;
     }
 
-    getListDeviceById(idDevice: number): Promise<any> {
+    getListManufacturerById(idDevice: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
@@ -178,19 +178,19 @@ export class ManufacturerService extends CommonService {
         return promise;
     }
 
-    findClassromByDevice(id: Number) :Promise<any> {
-        debugger
-        let accessToken = this.getAccessToken();
-        var secureHeaders = new Headers();
-        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
-        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ManufacturerApi + "/" + id , { headers: secureHeaders })
-            .toPromise()
-            .then(response => response.json() as any)
-            .catch(error => {
-                return this.handleError(error);
-            });
-        return promise;
-    }
+    // findClassromByDevice(id: Number) :Promise<any> {
+    //     debugger
+    //     let accessToken = this.getAccessToken();
+    //     var secureHeaders = new Headers();
+    //     secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+    //     secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
+    //     var promise = this.http.get(this.ManufacturerApi + "/" + id , { headers: secureHeaders })
+    //         .toPromise()
+    //         .then(response => response.json() as any)
+    //         .catch(error => {
+    //             return this.handleError(error);
+    //         });
+    //     return promise;
+    // }
 
 }

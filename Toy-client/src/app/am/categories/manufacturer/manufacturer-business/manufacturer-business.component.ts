@@ -214,7 +214,7 @@ export class ManufacturerBusinessComponent implements OnInit {
   }
 
   private getListClassroom() {
-    this.categoryService.getListClassroom()
+    this.categoryService.getListCategory()
         .then(response => {
             this.listCategory = response.data;
 

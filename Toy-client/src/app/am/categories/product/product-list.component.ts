@@ -174,6 +174,7 @@ export class ProductListComponent implements OnInit {
                 if (response == true) {
                     this.productService.deleteProductByListId(entityIds)
                         .then(response => {
+                            console.log(response)
                             let message;
                             if (response.code == 200) {
                                 this.translate.get('Message.DeleteSuccess').subscribe((res: string) => {
@@ -220,6 +221,7 @@ export class ProductListComponent implements OnInit {
      * @param id
      */
     deleteOneItem(id: number) {
+        debugger
         var entityIds = [];
         entityIds.push(id);
         this.delete(entityIds);

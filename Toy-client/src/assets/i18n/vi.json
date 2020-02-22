@@ -133,7 +133,10 @@
 		"UpdateTime" : "Thời gian cập nhật",
 		"UpdatedBy":"Người cập nhật",
 		"Category":"Thể loại",
-		"EnterAmount":"Nhập số lượng"
+		"EnterAmount":"Nhập số lượng",
+		"EnterPrice":"Nhập giá bán",
+		"EnterDescription":"Nhập mô tả",
+		"Description":"Mô tả"
 	},
 	"Category": {
 		"Title": "Người dùng",

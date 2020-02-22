@@ -1,4 +1,5 @@
 import { Category } from "../category/category";
+import { Manufacturer } from "../manufacturer/Manufacturer";
 
 /** 
  * the amphitheater class
@@ -22,7 +23,7 @@ export class Product {
     priceProduct:number;
     lenghtProduct:number;
     amountProduct:number;
-    withProduct:number;
+    widthProduct:number;
     heightProduct:number;
     createTime: Date;
 
@@ -36,4 +37,5 @@ export class Product {
     statuss: number;
     checked: boolean;
     category:Category;
+    manfacturer:Manufacturer;
 }
