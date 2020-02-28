@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box grey-cascade">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>{{ 'SIDEBAR.Directory' | translate }} >
+                    {{ 'SIDEBAR.Category' | translate }} > {{ 'Common.Detail'
+                    | translate }}
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal align-middle">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Account.Name'|translate}}:</label>
+                                        <div class="col-md-8">{{account?.username}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Account.Email'|translate}}</label>
+                                        <div class="col-md-8">{{account?.email}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Account.Password'|translate}}</label>
+                                        <div class="col-md-8">{{account?.password}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Account.Last_access'|translate}}</label>
+                                        <div class="col-md-8">{{account?.createTime}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Account.CreateTime'|translate}}</label>
+                                        <div class="col-md-8">{{account?.lastAccess}}</div>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.Functions'|translate}}</label>
+                                        <div class="col-md-8">{{account?.chucNang}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.CreateTime'|translate}}</label>
+                                        <div class="col-md-8">{{account?.createTime | date: 'dd/MM/yyyy'}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.CreatedBy'|translate}}</label>
+                                        <div class="col-md-8">{{account?.createdBy}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.UpdateTime'|translate}}</label>
+                                        <div class="col-md-8">{{account?.updateTime | date: 'dd/MM/yyyy'}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.UpdatedBy'|translate}}</label>
+                                        <div class="col-md-8">{{account?.updatedBy}}</div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Account.Status'|translate}}</label>
+                                        <div class="col-md-8">{{account?.active==1?'Active':'Inactive'}}</div>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Classroom.Device'|translate}}</label>
+                                        <div class="col-md-8" *ngFor="let item of device">{{item?.nameDevice}}  -  {{item?.statuss==1?'Active':'Inactive'}}</div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn default" (click)="goBack()">
+                                    <i class="fa fa-undo"
+                                        aria-hidden="true"></i>{{ 'Common.Back' | translate }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

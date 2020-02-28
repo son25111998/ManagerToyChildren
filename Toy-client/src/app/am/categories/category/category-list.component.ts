@@ -53,7 +53,7 @@ export class CategoryListComponent implements OnInit {
     fromNumber: number;
     toNumber: number;
     filterObject: Category;
-    switchGetClassroom: boolean;
+    switchGetCategory: boolean;
 
     constructor(
         private categoryService: CategoryService,
@@ -315,15 +315,15 @@ export class CategoryListComponent implements OnInit {
     //     var isAuthorizied = this.authGuardSubmenu.isAuthoriziedWithCurrentUrl(this.router.url);
     //     return isAuthorizied;
     // }
-    search(classroom: Category, page: number) {
-        this.filterObject = classroom;
-        this.switchGetClassroom = true;
+    search(category: Category, page: number) {
+        this.filterObject = category;
+        this.switchGetCategory = true;
         debugger;
-        this.categoryService.advanceSearch(classroom, page)
-            .then(classroomInfo => {
+        this.categoryService.advanceSearch(category, page)
+            .then(response => {
                 debugger;
-                this.categoryPageInfo = classroomInfo.data;
-                this.categorys = this.categoryPageInfo.content;
+                this.categoryPageInfo = response.data;
+                this.categorys = response.data.content;
                 this.pageLength = this.categoryPageInfo.content.length;
                 this.totalElements = this.categoryPageInfo.totalElements;
                 this.totalPages = this.categoryPageInfo.totalPages;

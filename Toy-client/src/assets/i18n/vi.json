@@ -72,7 +72,7 @@
 		"API Usage": "Sử dụng API",
 		"Top API Application": "Ứng dụng truy cập API",
 		"API Last Access": "Thời điểm truy cập API",
-		"Category": "Danh mục",
+		"Category": "Thể loại",
 		"Device": "Thiết bị",
 		"Account": "Người dùng",
 		"Product": "Sản phẩm"
@@ -139,7 +139,7 @@
 		"Description":"Mô tả"
 	},
 	"Category": {
-		"Title": "Người dùng",
+		"Title": "Thể Loại",
 		"Code": "Mã Thể loại",
 		"Name": "Tên Thể loại",
 		"CreatedBy": "Người tạo",
@@ -167,14 +167,19 @@
 		"Title": "Người dùng",
 		"Code": "Mã Người dùng",
 		"Name": "Tên Người dùng",
+		"Password":"Mật khẩu",
 		"Created": "Thời gian tạo",
 		"CreatedBy": "Người tạo",
 		"ChooseProvince": "Chọn thiết bị",
 		"Status": "Trạng thái",
 		"Classroom": "Tên phòng học",
 		"Amount": "Số lượng",
+		"CreateTime" : "Thời gian taọ",
 		"UpdateTime" : "Thời gian cập nhật",
-		"UpdatedBy":"Người cập nhật"
+		"UpdatedBy":"Người cập nhật",
+		"Last_access":"Ngày tạo",
+		"Email":"Email",
+		"Role_id":"Quyền"
 	},
 	"ShoppingCart": {
 		"Title": "Giỏ hàng",

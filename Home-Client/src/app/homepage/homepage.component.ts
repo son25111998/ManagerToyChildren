@@ -16,6 +16,7 @@ import { PageInfo } from '../../app/util/page-info';
 import { Constants } from '../../app/util/constants';
 import { ProductPageInfo } from './ProductPageInfo';
 // import { ProductForm } from './product-form.component';
+declare var $;
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -47,7 +48,7 @@ export class HomepageComponent implements OnInit {
   toNumber: number;
 
   // list amphitheater to export file excel
-  amphitheater: Product[];
+  listProduct: any[];
 
   constructor(
       private productService: ProductserviceService,
@@ -64,18 +65,31 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.getPageProduct(this.currentPage);
+    this.getListProduct();
   }
+  private getListProduct() {
+    this.productService.getListProduct()
+        .then(response => {
+            console.log(response.data)
+            debugger
+            this.listProduct = response.data;
+            console.log(this.listProduct);
+          //  this.init(0)
+        }).catch(error => {
+            console.log(error)
+        });
+}
   getPageProduct(page: number) {
     debugger
     this.productService.getPageProduct(page)
         .then(response => {
-            console.log(response.data)
+            //console.log(response.data)
             debugger
             this.productInfo = response.data;
             this.products = response.data.content;
-            console.log(this.products)
+            console.log("dday"+this.products)
             this.pageLength = response.data.content.length;
-            console.log("page",this.pageLength)
+           // console.log("page",this.pageLength)
             this.totalElements = this.productInfo.totalElements;
             this.totalPages = this.productInfo.totalPages;
             if (!(this.totalPages > 0)) {

@@ -42,11 +42,139 @@
                         </div>
                       </div>
                     </div>
+                    <div *ngIf="isShow">
+                      <!-- <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-4" for="id">{{ 'Product.Code'
+                                      | translate }}</label>
+                              <div class="col-md-8">
+                                  <input id="id" ng-trim="true" type="text"
+                                      class="form-control"
+                                      placeholder="{{ 'Product.EnterCode' | translate }}"
+                                      formControlName="id">
+                              </div>
+                          </div>
+                      </div> -->
+                      <!-- <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-4" for="manfacturer">{{ 'Manufacturer.Code'
+                                          | translate }}</label>
+                              <div class="col-md-8">
+                                  <input id="manfacturer" ng-trim="true" type="text" class="form-control"
+                                      placeholder="{{ 'Manufacturer.EnterCode' | translate }}"
+                                      formControlName="manfacturer">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-4" for="category">{{ 'Category.Name'
+                                          | translate }}</label>
+                              <div class="col-md-8">
+                                  <input id="category" ng-trim="true" type="text" class="form-control"
+                                      placeholder="{{ 'Category.Name' | translate }}"
+                                      formControlName="category">
+                              </div>
+                          </div>
+                      </div> -->
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-4" for="amount">{{ 'Product.Amount'
+                                              | translate }}</label>
+                              <div class="col-md-8">
+                                  <input id="amount" ng-trim="true" type="text" class="form-control"
+                                      placeholder="{{ 'Product.Amount' | translate }}"
+                                      formControlName="amount">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="price">{{ 'Product.Price'
+                                            | translate }}</label>
+                            <div class="col-md-8">
+                                <input id="price" ng-trim="true" type="text" class="form-control"
+                                    placeholder="{{ 'Product.Price' | translate }}"
+                                    formControlName="price">
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="control-label col-md-4"
+                                  for="createTime">{{ 'Product.Created' | translate }}
+                              </label>
+                              <div class="col-md-8">
+                                  <input id="createTime" type="date" class="form-control"
+                                      formControlName="createTime"
+                                      placeholder="{{ 'Product.Created' | translate }}" />
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"
+                                for="category">{{ 'Product.Category' | translate }}
+                                <!-- <span style="color:red;"> *</span> -->
+                            </label>
+                            <div class="col-md-8">
+                                <ng-select id="categoryId"
+                                    [active]="indexCategorySelection!=null?[categorySelections[indexCategorySelection]]:''"
+                                    [allowClear]="true" [items]="categorySelections"
+                                    (selected)="categoryChanged($event?.id)"
+                                    (removed)="categoryChanged(0)"
+                                    placeholder="{{ 'Category.ChooseCategory' | translate }}"
+                                    ngDefaultControl>
+                                </ng-select>
+                                <!-- <small class="error" *ngIf="(ProductForm.get('category').touched)">
+                                    <span *ngIf="!ProductForm.get('category.id').value">
+                                        {{ 'Message.Required' | translate }}
+                                    </span>
+  
+                                </small> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4"
+                                for="manfacturer">{{ 'Product.Manufacturer' | translate }}
+                                <!-- <span style="color:red;"> *</span> -->
+                            </label>
+                            <div class="col-md-8">
+                                <ng-select id="manufacturerId"
+                                    [active]="indexManufactererSelection!=null?[manufacturerSelections[indexManufactererSelection]]:''"
+                                    [allowClear]="true" [items]="manufacturerSelections"
+                                
+                                    (selected)="manfacturerChanged($event?.id)"
+                                    (removed)="manfacturerChanged(0)"
+                                    placeholder="{{ 'Manufacturer.Chooseman' | translate }}"
+                                    ngDefaultControl>
+                                </ng-select>
+                                <!-- <small class="error"
+                                    *ngIf="(ProductForm.get('manufacturerId').touched)">
+                                    <span *ngIf="!ProductForm.get('manufacturer.id').value">
+                                        {{ 'Message.Required' | translate }}
+                                    </span>
+  
+                                </small> -->
+                            </div>
+                        </div>
+                    </div>
+
+                  </div>
+
                   </div>
                   <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-11 text-center">
                       <button type="submit" class="btn green">{{ 'Common.Search' | translate }}</button>
                     </div>
+                    <div class="col-md-1 text-right">
+                      <button (click)="isShow=true" *ngIf="!isShow" class="btn green"><i
+                              class="fa fa-plus" id="business-btn" ></i></button>
+                      <button (click)="showAdvancedSearch();" *ngIf="isShow" class="btn green"><i
+                              class="fa fa-minus" id="business-btn"></i></button>
+                  </div>
                   </div>
                 </form>
               </div>

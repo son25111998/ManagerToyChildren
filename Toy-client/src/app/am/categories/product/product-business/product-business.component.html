@@ -23,66 +23,132 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <h3 class="block">Chi tiết chung</h3>
-                                    <div class="col-md-6">
-                                        <input id="id" type="hidden" class="form-control"
-                                            formControlName="idProduct" />
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"
-                                                for="name">{{ 'Product.Name' | translate }}
-                                                <span style="color:red;"> *</span>
-                                            </label>
-                                            <div class="col-md-8">
-                                                <input id="name" autocomplete="off" type="text"
-                                                    class="form-control" formControlName="name"
-                                                    placeholder="{{ 'Product.Name' | translate }}" />
-                                                <!-- <div class="col-md-8">{{amphitheater?.nameAmphitheater}}</div> -->
-                                                <small class="error"
-                                                    *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
-                                                    <span *ngIf="ProductForm.get('name').errors.required">
-                                                        {{ 'Message.Required' | translate }}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="isUpdate===false && !ProductForm.get('name').errors.required&&ProductForm.get('name').errors.pattern!=null">
-                                                        {{ 'Message.CodeInvalid' | translate }}
-                                                    </span>
-                                                    <span
-                                                        *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
-                                                        {{ 'Message.MaxLength' | translate }} 50
-                                                    </span>
-                                                </small>
-                                                <small class="error"
+                                    <div *ngIf="isUpdate==false">
+                                        <div class="col-md-6">
+                                            <input id="id" type="hidden" class="form-control"
+                                                formControlName="id" />
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="name">{{ 'Product.Name' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input id="name" autocomplete="off" type="text" class="form-control"
+                                                        formControlName="name"
+                                                        placeholder="{{ 'Product.Name' | translate }}" />
+                                                    <!-- <div class="col-md-8">{{amphitheater?.nameAmphitheater}}</div> -->
+                                                    <small class="error"
+                                                        *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                                        <span *ngIf="ProductForm.get('name').errors.required">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="isUpdate===false && !ProductForm.get('name').errors.required&&ProductForm.get('name').errors.pattern!=null">
+                                                            {{ 'Message.CodeInvalid' | translate }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
+                                                            {{ 'Message.MaxLength' | translate }} 50
+                                                        </span>
+                                                    </small>
+                                                    <!-- <small class="error"
                                                     *ngIf="!ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
-                                                    <span
-                                                        *ngIf="ProductForm.get('name').value.trim() == ''">
+                                                    <span *ngIf="ProductForm.get('name').value.trim() == ''">
                                                         {{ 'Message.CodeInvalid' | translate }}
                                                     </span>
                                                     <span
                                                         *ngIf="isUpdate===true && !isEqualOld(ProductForm.get('name').value, 'code')">
                                                         {{ 'Message.Same' | translate }}
                                                     </span>
-                                                </small>
+                                                </small> -->
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-    
-                                    <small class="error"
-                                        *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
-                                        <span
-                                            *ngIf="ProductForm.get('name').errors.required||ProductForm.get('name').errors.pattern!=null">
-                                            {{ 'Message.Required' | translate }}
-                                        </span>
-                                        <span
-                                            *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
-                                            {{ 'Message.MaxLength' | translate }} 50
-                                        </span>
-                                    </small>
-                                    <small class="error"
+
+                                        <small class="error"
+                                            *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                            <span
+                                                *ngIf="ProductForm.get('name').errors.required||ProductForm.get('name').errors.pattern!=null">
+                                                {{ 'Message.Required' | translate }}
+                                            </span>
+                                            <span
+                                                *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
+                                                {{ 'Message.MaxLength' | translate }} 50
+                                            </span>
+                                        </small>
+
+                                        <!-- <small class="error"
+
                                         *ngIf="!ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
                                         <span
                                             *ngIf="isUpdate===true && !isEqualOld(ProductForm.get('name').value, 'name')">
                                             {{ 'Message.Same' | translate }}
                                         </span>
-                                    </small>
+                                    </small> -->
+                                    </div>
+                                    <div *ngIf="isUpdate==true">
+                                        <div class="col-md-6">
+                                            <input id="id" type="hidden" class="form-control"
+                                                formControlName="id" />
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="name">{{ 'Product.Name' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input id="name" autocomplete="off" type="text" class="form-control"
+                                                        formControlName="name"
+                                                        placeholder="{{ 'Product.Name' | translate }}" />
+                                                    <!-- <div class="col-md-8">{{amphitheater?.nameAmphitheater}}</div> -->
+                                                    <small class="error"
+                                                        *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                                        <span *ngIf="ProductForm.get('name').errors.required">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="isUpdate===false && !ProductForm.get('name').errors.required&&ProductForm.get('name').errors.pattern!=null">
+                                                            {{ 'Message.CodeInvalid' | translate }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
+                                                            {{ 'Message.MaxLength' | translate }} 50
+                                                        </span>
+                                                    </small>
+                                                    <!-- <small class="error"
+                                                    *ngIf="!ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                                    <span *ngIf="ProductForm.get('name').value.trim() == ''">
+                                                        {{ 'Message.CodeInvalid' | translate }}
+                                                    </span>
+                                                    <span
+                                                        *ngIf="isUpdate===true && !isEqualOld(ProductForm.get('name').value, 'code')">
+                                                        {{ 'Message.Same' | translate }}
+                                                    </span>
+                                                </small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <small class="error"
+                                            *ngIf="ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                            <span
+                                                *ngIf="ProductForm.get('name').errors.required||ProductForm.get('name').errors.pattern!=null">
+                                                {{ 'Message.Required' | translate }}
+                                            </span>
+                                            <span
+                                                *ngIf="!ProductForm.get('name').errors.required&&ProductForm.get('name').errors.maxlength!=null">
+                                                {{ 'Message.MaxLength' | translate }} 50
+                                            </span>
+                                        </small>
+
+                                        <!-- <small class="error"
+
+                                        *ngIf="!ProductForm.get('name').invalid && (ProductForm.get('name').touched)">
+                                        <span
+                                            *ngIf="isUpdate===true && !isEqualOld(ProductForm.get('name').value, 'name')">
+                                            {{ 'Message.Same' | translate }}
+                                        </span>
+                                    </small> -->
+                                    </div>
                                     <!--Mới thêm-->
                                     <div *ngIf="isUpdate===false">
                                         <div class="col-md-6">
@@ -95,14 +161,16 @@
                                                     <ng-select id="categoryId"
                                                         [active]="indexCategorySelection!=null?[categorySelections[indexCategorySelection]]:''"
                                                         [allowClear]="true" [items]="categorySelections"
-                                                        (selected)="categoryChanged($event?.id)" (removed)="categoryChanged(0)"
-                                                        placeholder="{{ 'Category.ChooseCategory' | translate }}" ngDefaultControl>
+                                                        (selected)="categoryChanged($event?.id)"
+                                                        (removed)="categoryChanged(0)"
+                                                        placeholder="{{ 'Category.ChooseCategory' | translate }}"
+                                                        ngDefaultControl>
                                                     </ng-select>
                                                     <small class="error" *ngIf="(ProductForm.get('category').touched)">
-                                                        <span *ngIf="!ProductForm.get('categoryId').value">
+                                                        <span *ngIf="!ProductForm.get('category.id').value">
                                                             {{ 'Message.Required' | translate }}
                                                         </span>
-                    
+
                                                     </small>
                                                 </div>
                                             </div>
@@ -110,34 +178,38 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label col-md-4"
-                                                    for="manfacture">{{ 'Product.Manufacturer' | translate }}
+                                                    for="manfacturer">{{ 'Product.Manufacturer' | translate }}
                                                     <span style="color:red;"> *</span>
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <ng-select id="manfacturerId"
+                                                    <ng-select id="manufacturerId"
                                                         [active]="indexManufactererSelection!=null?[manufacturerSelections[indexManufactererSelection]]:''"
                                                         [allowClear]="true" [items]="manufacturerSelections"
-                                                        (selected)="manfacturerChanged($event?.id)" (removed)="manfacturerChanged(0)"
-                                                        placeholder="{{ 'Manufacturer.Chooseman' | translate }}" ngDefaultControl>
+                                                        (selected)="manfacturerChanged($event?.id)"
+                                                        (removed)="manfacturerChanged(0)"
+                                                        placeholder="{{ 'Manufacturer.Chooseman' | translate }}"
+                                                        ngDefaultControl>
                                                     </ng-select>
-                                                    <small class="error" *ngIf="(ProductForm.get('manfacture').touched)">
-                                                        <span *ngIf="!ProductForm.get('manfacturerId').value">
+                                                    <small class="error"
+                                                        *ngIf="(ProductForm.get('manufacturerId').touched)">
+                                                        <span *ngIf="!ProductForm.get('manufacturer.id').value">
                                                             {{ 'Message.Required' | translate }}
                                                         </span>
-                    
+
                                                     </small>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4" for="description">{{ 'Product.Description' | translate }}
+                                                <label class="control-label col-md-4"
+                                                    for="description">{{ 'Product.Description' | translate }}
                                                     <span style="color:red;"> *</span>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <input id="name" autocomplete="off" type="text" class="form-control"
-                                                        formControlName="description" placeholder="{{ 'Product.EnterDescription' | translate }}"
-                                                     />
+                                                        formControlName="description"
+                                                        placeholder="{{ 'Product.EnterDescription' | translate }}" />
                                                     <!-- <small class="error"
                                                         *ngIf="ProductForm.get('amountProduct').invalid && (ProductForm.get('amountProduct').touched)">
                                                         <span
@@ -151,47 +223,163 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4" for="price">{{ 'Product.Price' | translate }}
+                                                <label class="control-label col-md-4"
+                                                    for="price">{{ 'Product.Price' | translate }}
                                                     <span style="color:red;"> *</span>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <input id="name" autocomplete="off" type="text" class="form-control"
-                                                        formControlName="price" placeholder="{{ 'Product.EnterPrice' | translate }}"
-                                                     />
+                                                        formControlName="price"
+                                                        placeholder="{{ 'Product.EnterPrice' | translate }}" />
                                                     <small class="error"
                                                         *ngIf="ProductForm.get('price').invalid && (ProductForm.get('price').touched)">
                                                         <span
                                                             *ngIf="ProductForm.get('price').errors.required||ProductForm.get('price').errors.pattern!=null">
                                                             {{ 'Message.Required' | translate }}
                                                         </span>
-                    
+
                                                     </small>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4" for="amount">{{ 'Product.Amount' | translate }}
+                                                <label class="control-label col-md-4"
+                                                    for="amount">{{ 'Product.Amount' | translate }}
                                                     <span style="color:red;"> *</span>
                                                 </label>
                                                 <div class="col-md-8">
                                                     <input id="name" autocomplete="off" type="text" class="form-control"
-                                                        formControlName="amount" placeholder="{{ 'Product.EnterAmount' | translate }}"
-                                                     />
+                                                        formControlName="amount"
+                                                        placeholder="{{ 'Product.EnterAmount' | translate }}" />
                                                     <small class="error"
                                                         *ngIf="ProductForm.get('amount').invalid && (ProductForm.get('amount').touched)">
                                                         <span
                                                             *ngIf="ProductForm.get('amount').errors.required||ProductForm.get('amount').errors.pattern!=null">
                                                             {{ 'Message.Required' | translate }}
                                                         </span>
-                    
+
                                                     </small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                            <!--đến đây-->
-                                    <div class="col-md-6" *ngIf="!isUpdate===true">
+                                    <div *ngIf="isUpdate===true">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="category">{{ 'Product.Category' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <ng-select id="categoryId"
+                                                        [active]="indexCategorySelection!=null?[categorySelections[indexCategorySelection]]:''"
+                                                        [allowClear]="true" [items]="categorySelections"
+                                                        (selected)="categoryChanged($event?.id)"
+                                                        (removed)="categoryChanged(0)"
+                                                        placeholder="{{ 'Category.ChooseCategory' | translate }}"
+                                                        ngDefaultControl>
+                                                    </ng-select>
+                                                    <small class="error" *ngIf="(ProductForm.get('category').touched)">
+                                                        <span *ngIf="!ProductForm.get('category.id').value">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="manfacturer">{{ 'Product.Manufacturer' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <ng-select id="manufacturerId"
+                                                        [active]="indexManufactererSelection!=null?[manufacturerSelections[indexManufactererSelection]]:''"
+                                                        [allowClear]="true" [items]="manufacturerSelections"
+                                                        (selected)="manfacturerChanged($event?.id)"
+                                                        (removed)="manfacturerChanged(0)"
+                                                        placeholder="{{ 'Manufacturer.Chooseman' | translate }}"
+                                                        ngDefaultControl>
+                                                    </ng-select>
+                                                    <small class="error"
+                                                        *ngIf="(ProductForm.get('manufacturerId').touched)">
+                                                        <span *ngIf="!ProductForm.get('manufacturer.id').value">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="description">{{ 'Product.Description' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input id="name" autocomplete="off" type="text" class="form-control"
+                                                        formControlName="description"
+                                                        placeholder="{{ 'Product.EnterDescription' | translate }}" />
+                                                    <!-- <small class="error"
+                                                        *ngIf="ProductForm.get('amountProduct').invalid && (ProductForm.get('amountProduct').touched)">
+                                                        <span
+                                                            *ngIf="ProductForm.get('amountProduct').errors.required||ProductForm.get('amountProduct').errors.pattern!=null">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+                    
+                                                    </small> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="price">{{ 'Product.Price' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input id="price" autocomplete="off" type="text" class="form-control"
+                                                        formControlName="price"
+                                                        placeholder="{{ 'Product.EnterPrice' | translate }}" />
+                                                    <small class="error"
+                                                        *ngIf="ProductForm.get('price').invalid && (ProductForm.get('price').touched)">
+                                                        <span
+                                                            *ngIf="ProductForm.get('price').errors.required||ProductForm.get('price').errors.pattern!=null">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-4"
+                                                    for="amount">{{ 'Product.Amount' | translate }}
+                                                    <span style="color:red;"> *</span>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input id="name" autocomplete="off" type="text" class="form-control"
+                                                        formControlName="amount"
+                                                        placeholder="{{ 'Product.EnterAmount' | translate }}" />
+                                                    <small class="error"
+                                                        *ngIf="ProductForm.get('amount').invalid && (ProductForm.get('amount').touched)">
+                                                        <span
+                                                            *ngIf="ProductForm.get('amount').errors.required||ProductForm.get('amount').errors.pattern!=null">
+                                                            {{ 'Message.Required' | translate }}
+                                                        </span>
+
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--đến đây-->
+                                    <!-- <div class="col-md-6" *ngIf="!isUpdate===true">
                                         <div class="form-group">
                                             <label class="control-label col-md-4"
                                                 for="statuss">{{'Product.Status'|translate}}
@@ -208,7 +396,7 @@
                                                 </small>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6" *ngIf="isUpdate===true">
                                         <div class="form-group">
                                             <label class="control-label col-md-4"
@@ -227,7 +415,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-md-2">
                                     <h3 class="block">Ảnh</h3>

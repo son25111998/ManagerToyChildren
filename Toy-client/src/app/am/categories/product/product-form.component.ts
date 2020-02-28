@@ -15,12 +15,8 @@ export class ProductForm {
         var ProductForm: FormGroup;
 
         ProductForm = fb.group({
-            id: "",
-            idProduct: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(10),
-                Validators.pattern(Constants.CODE_PATTERN)
-            ])],
+            //id: "",
+            id: null,
             name: ["", Validators.compose([
                 Validators.required,
                 Validators.maxLength(50),
@@ -29,7 +25,7 @@ export class ProductForm {
             price: ["", Validators.compose([
                 Validators.required,
                 Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
+                Validators.pattern(Constants.NUMBER_PATTERN)
             ])],
             amount: ["", Validators.compose([
                 Validators.required,
@@ -64,24 +60,34 @@ export class ProductForm {
                     Validators.required,
                     Validators.min(1)
                 ])],
-                code: ["", Validators.compose([
+                name: ["", Validators.compose([
                     Validators.required,
-                    Validators.pattern(Constants.CODE_PATTERN)
+                    Validators.maxLength(50),
+                    Validators.pattern(Constants.NAME_PATTERN)
                 ])],
             }),
-            manfactureId: ["", Validators.compose([
+            thumbai: ["", Validators.compose([
+                Validators.required,
+                Validators.maxLength(50),
+                Validators.pattern(Constants.NAME_PATTERN)
+            ])],
+            manufacturerId: ["", Validators.compose([
                 Validators.required,
             ])],
-            manfacture: fb.group({
+            manfacturer: fb.group({
                 id: [null, Validators.compose([
                     Validators.required,
                     Validators.min(1)
                 ])],
-                code: ["", Validators.compose([
+                name: ["", Validators.compose([
                     Validators.required,
-                    Validators.pattern(Constants.CODE_PATTERN)
+                    Validators.maxLength(50),
+                    Validators.pattern(Constants.NAME_PATTERN)
                 ])],
             }),
+            createTime: ["", Validators.compose([
+                Validators.required,
+            ])], 
             statuss: [1, Validators.compose([
                 Validators.required
             ])],
@@ -101,18 +107,28 @@ export class ProductForm {
      * @param countryForm : country form
      * @param country : Data used to set up for form
      */
-    static bindingData(productForm: FormGroup, Product: Product) {
+    static bindingData(productForm: FormGroup, product: Product) {
         debugger
         productForm.patchValue({
-            idProduct: Product.idProduct,
-            nameProduct: Product.nameProduct,
-            amountProduct: Product.amountProduct,
-            lenghtProduct: Product.lenghtProduct,
-            widthProduct: Product.widthProduct,
-            heightProduct: Product.heightProduct,
-            category:Product.category,
-            manfacture:Product.manfacturer,
-            statuss: Product.statuss,
+            id: product.id,
+            name: product.name,
+            amount: product.amount,
+            lenght: product.lenght,
+            width: product.width,
+            height: product.height,
+            createTime:product.createTime,
+            thumbai:product.thumbai,
+            price:product.price,
+            description:product.description,
+            // category:{
+            //     id: product.category.id,
+            //     name: product.category.name,
+            // },
+            // manfacturer: {
+            //     id: product.manfacturer.id,
+            //     name: product.manfacturer.name,
+            // },
+            statuss: product.statuss,
 
             // statuss: Amphitheater
         });

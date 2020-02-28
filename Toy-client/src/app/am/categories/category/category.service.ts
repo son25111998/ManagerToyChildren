@@ -77,7 +77,7 @@ export class CategoryService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.delete(this.ClassroomApi + "/delete-all/" + entityIds, { headers: secureHeaders })
+        var promise = this.http.delete(this.ClassroomApi + "/delete-multiple/" + entityIds, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {

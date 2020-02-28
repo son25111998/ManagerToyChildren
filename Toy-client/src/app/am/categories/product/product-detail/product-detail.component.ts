@@ -1,5 +1,4 @@
 
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Toast } from 'ng2-toastr';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
@@ -8,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Product } from '../product';
 
-
+declare var $;
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -21,7 +20,8 @@ import { Product } from '../product';
 export class ProductDetailComponent implements OnInit {
   private sub: any;
   id: number;
-  amphitheater: Product;
+  product: Product;
+  urlPhoto: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +35,15 @@ export class ProductDetailComponent implements OnInit {
       this.id = params['id'];
       this.productService.findOne(this.id)
         .then(response => {
-          this.amphitheater = response.data;
+          this.product = response.data;
+          this.urlPhoto = 'assets/layouts/layout/img/' + this.product.thumbai;
+          console.log(this.urlPhoto)
+          if (this.product.thumbai != null) {
+            $('#apiEditThumb').attr('src', this.urlPhoto)
+          }
+          else {
+            $('#apiEditThumb').attr('src', "assets/layouts/layout/img/api-default.jpeg")
+          }
         })
         .catch(error => {
           console.log("errors: " + error);

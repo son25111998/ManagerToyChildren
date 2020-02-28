@@ -17,60 +17,60 @@ export class CategoryForm {
 
         categoryForm = fb.group({
             // id: 0,
-            idClassroom: "",
+            id: "",
 
-            amphitheater: fb.group({
-                idAmphitheater: [1, Validators.compose([
-                    Validators.required,
-                    Validators.min(1)
-                ])]
-            }),
-            device: fb.group({
-                deviceId: [0, Validators.compose([
-                    Validators.required,
-                    Validators.min(1)
-                ])]
-            }),
-            symbol: ["", Validators.compose([
+            // name: fb.group({
+            //     idAmphitheater: [1, Validators.compose([
+            //         Validators.required,
+            //         Validators.min(1)
+            //     ])]
+            // }),
+            // device: fb.group({
+            //     deviceId: [0, Validators.compose([
+            //         Validators.required,
+            //         Validators.min(1)
+            //     ])]
+            // }),
+            // symbol: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            name: ["", Validators.compose([
                 Validators.required,
                 Validators.maxLength(50),
                 Validators.pattern(Constants.NAME_PATTERN)
             ])],
-            nameClassroom: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            amount: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            size: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            chucNang: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            creationTime: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            createdBy: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
-            updatedBy: ["", Validators.compose([
-                Validators.required,
-                Validators.maxLength(50),
-                Validators.pattern(Constants.NAME_PATTERN)
-            ])],
+            // amount: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            // size: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            // chucNang: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            // creationTime: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            // createdBy: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
+            // updatedBy: ["", Validators.compose([
+            //     Validators.required,
+            //     Validators.maxLength(50),
+            //     Validators.pattern(Constants.NAME_PATTERN)
+            // ])],
             statuss: [1, Validators.compose([
                 Validators.required,
                 Validators.maxLength(50),
@@ -88,6 +88,8 @@ export class CategoryForm {
     static bindingData(categoryForm: FormGroup, category: Category) {
         debugger
         categoryForm.patchValue({
+            id:category.id,
+            name:category.name,
             // idClassroom: Category.idCateg,
             // // amphitheater: Category.amphitheater,
             // // // staffInCharge: Classroom.staffInCharge,

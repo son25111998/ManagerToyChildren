@@ -6,9 +6,9 @@ import { Manufacturer } from "../manufacturer/Manufacturer";
 */
 export class Product {
     /** the id of the amphitheater */
-    idProduct: number;
+    id: number;
     /** the name of the amphitheater */
-    nameProduct: string
+    name: string
     /** the create time of the amphitheater */
     // createTime: Date;
     // /** the update name of the amphitheater */
@@ -19,12 +19,13 @@ export class Product {
     // updatedBy: string;
     // /** the status of the amphitheater */
     // statuss: string;
-    descriptionProduct:string;
-    priceProduct:number;
-    lenghtProduct:number;
-    amountProduct:number;
-    widthProduct:number;
-    heightProduct:number;
+    description:string;
+    price:number;
+    thumbai:String='';
+    lenght:number;
+    amount:number;
+    width:number;
+    height:number;
     createTime: Date;
 
     createdBy: string;

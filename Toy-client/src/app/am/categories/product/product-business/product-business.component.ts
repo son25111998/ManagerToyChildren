@@ -21,7 +21,7 @@ declare var $;
 @Component({
   selector: 'app-product-business',
   templateUrl: './product-business.component.html',
-  providers: [ProductService, CategoryService,ManufacturerService]
+  providers: [ProductService, CategoryService, ManufacturerService]
 })
 
 /**
@@ -44,7 +44,7 @@ export class ProductBusinessComponent implements OnInit {
   product: Product;
   listCategory: Category[]
   listManfacturer: Manufacturer[]
-  
+
 
   isUpdate: boolean = true;
 
@@ -85,7 +85,7 @@ export class ProductBusinessComponent implements OnInit {
     try {
       var old;
       if (type == "name") {
-        old = this.Product.nameProduct;
+        old = this.Product.name;
       }
       if (old != thenew && old == this.standardized(thenew, type)) {
         return false;
@@ -106,9 +106,9 @@ export class ProductBusinessComponent implements OnInit {
   private getListManfacture() {
     this.manufacturerService.getListManufacturer()
       .then(response => {
-        console.log("cate", response.data)
-        console.log("id", response.data.id)
-        this.listCategory = response.data;
+        // console.log("cate", response.data)
+        // console.log("id", response.data.id)
+        this.listManfacturer = response.data;
         if (this.product && this.product.manfacturer) {
           this.initializeManfacturerSelection(this.product.manfacturer.id);
 
@@ -124,9 +124,9 @@ export class ProductBusinessComponent implements OnInit {
   private initializeManfacturerSelection(selectItem: number) {
     let manfacturer_datas = []
     var countItems = 0;
-    if (this.listCategory) {
-      this.listCategory.forEach(element => {
-        console.log(element);
+    if (this.listManfacturer) {
+      this.listManfacturer.forEach(element => {
+        //   console.log(element);
         var item = {
           id: null, text: null
         };
@@ -140,16 +140,17 @@ export class ProductBusinessComponent implements OnInit {
       });
     }
     this.manufacturerSelections = manfacturer_datas
-    console.log(this.manufacturerSelections)
+    // console.log(this.manufacturerSelections)
   }
 
   manfacturerChanged(id: number) {
     //debugger 
     var id1: number
     //this.ProductForm.get('province.id').setValue(id);
+    this.ProductForm.get('manufacturerId').setValue(id);
     this.manufacturerService.findOne(id).then(response => {
-      this.codeManfacture = response.data.code;
-      console.log("Cáccs", response)
+      this.id = response.data.id;
+      //console.log("Cáccs", response)
       //this.ProductForm.get('categoryId').setValue(this.codeCategory)
     }).catch(error => {
       console.log(error)
@@ -160,8 +161,8 @@ export class ProductBusinessComponent implements OnInit {
   private getListCategory() {
     this.categoryService.getListCategory()
       .then(response => {
-        console.log("cate", response.data)
-        console.log("id", response.data.id)
+        // console.log("cate", response.data)
+        // console.log("id", response.data.id)
         this.listCategory = response.data;
         if (this.product && this.product.category) {
           this.initializeCategorySelection(this.product.category.id);
@@ -183,7 +184,7 @@ export class ProductBusinessComponent implements OnInit {
     var countItems = 0;
     if (this.listCategory) {
       this.listCategory.forEach(element => {
-        console.log(element);
+        //  console.log(element);
         var item = {
           id: null, text: null
         };
@@ -197,17 +198,18 @@ export class ProductBusinessComponent implements OnInit {
       });
     }
     this.categorySelections = category_datas
-    console.log(this.categorySelections)
+    //console.log(this.categorySelections)
   }
   codeCategory: string;
   categoryChanged(id: number) {
     //debugger 
     var id1: number
     //this.ProductForm.get('province.id').setValue(id);
+    this.ProductForm.get('categoryId').setValue(id);
     this.categoryService.findOne(id).then(response => {
-      this.codeCategory = response.data.code;
-      console.log("Cáccs", response)
-      //this.ProductForm.get('categoryId').setValue(this.codeCategory)
+      this.id = response.data.id;
+      // console.log("Cáccs", response)
+
     }).catch(error => {
       console.log(error)
     });
@@ -220,8 +222,20 @@ export class ProductBusinessComponent implements OnInit {
     this.productService.findOne(id)
       .then(response => {
         debugger
-        this.Product = JSON.parse(JSON.stringify(response.data));
-        ProductForm.bindingData(productForm, this.Product);
+        //console.log(response)
+        this.product = new Product()
+        this.product = response.data;
+        // this.Product = JSON.parse(JSON.stringify(response.data));
+        ProductForm.bindingData(productForm, this.product);
+        this.urlPhoto = 'assets/layouts/layout/img/' + this.product.thumbai;
+        //console.log(this.product)
+        if (this.product.thumbai != null) {
+          $('#apiEditThumb').attr('src', this.urlPhoto)
+        }
+        else {
+          $('#apiEditThumb').attr('src', "assets/layouts/layout/img/api-default.jpeg")
+        }
+
       })
       .catch(error => console.log("errors: " + error));
   }
@@ -230,9 +244,9 @@ export class ProductBusinessComponent implements OnInit {
    * @description : submit data
    * @param Province : the data
    */
-  submit(Product) {
+  submit(Product: Product) {
     if (this.isUpdate) {
-      console.log(Product);
+      // console.log(Product);
       debugger
       this.updateProduct(Product);
     } else {
@@ -243,10 +257,13 @@ export class ProductBusinessComponent implements OnInit {
   /**
    * Creat a new object
    */
-  private createProduct(Product) {
+  private createProduct(product: Product) {
     debugger
-    //this.productService.createApiImage(this.apiFile);
-    this.productService.create(Product)
+    this.productService.createApiImage(this.apiFile);
+    // Product.thumbai=this.apiFile.name;
+    product.thumbai = this.apiFile.name;
+    //console.log("ten nay",this.Product.thumbai)
+    this.productService.create(product)
       .then(response => {
         this.goBack();
       })
@@ -269,6 +286,10 @@ export class ProductBusinessComponent implements OnInit {
    * @param Province
    */
   private updateProduct(Product) {
+    this.productService.createApiImage(this.apiFile);
+    // Product.thumbai=this.apiFile.name;
+    Product.thumbai = this.apiFile.name;
+
     this.productService.update(Product)
       .then(response => {
 
@@ -323,7 +344,7 @@ export class ProductBusinessComponent implements OnInit {
         $('#apiEditThumb').attr('src', urlPhoto)
 
       }
-      console.log(file);
+      // console.log(file);
       this.apiFile = file;
       //this.apiService.createApiImage(file);
     }

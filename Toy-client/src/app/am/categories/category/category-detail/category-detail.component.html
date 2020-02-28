@@ -17,9 +17,9 @@
                                     <div class="form-group">
                                         <label
                                             class="col-md-4 text-right">{{'Category.Name'|translate}}:</label>
-                                        <div class="col-md-8">{{classroom?.nameClassroom}}</div>
+                                        <div class="col-md-8">{{category?.name}}</div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label
                                             class="col-md-4 text-right">{{'Classroom.Amphitheater'|translate}}</label>
                                         <div class="col-md-8">{{classroom?.amphitheater.nameAmphitheater}}</div>
@@ -55,15 +55,15 @@
                                     <div class="form-group">
                                         <label class="col-md-4 text-right">{{'Classroom.UpdatedBy'|translate}}</label>
                                         <div class="col-md-8">{{classroom?.updatedBy}}</div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
-                                        <label class="col-md-4 text-right">{{'Classroom.Status'|translate}}</label>
-                                        <div class="col-md-8">{{classroom?.statuss==1?'Active':'Inactive'}}</div>
+                                        <label class="col-md-4 text-right">{{'Category.Status'|translate}}</label>
+                                        <div class="col-md-8">{{category?.statuss==1?'Active':'Inactive'}}</div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-4 text-right">{{'Classroom.Device'|translate}}</label>
                                         <div class="col-md-8" *ngFor="let item of device">{{item?.nameDevice}}  -  {{item?.statuss==1?'Active':'Inactive'}}</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="modal-footer">

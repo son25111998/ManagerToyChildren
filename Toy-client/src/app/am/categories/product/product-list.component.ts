@@ -18,6 +18,10 @@ import { Constants } from '../../common/util/constants';
 import { ProductPageInfo } from './ProductPageInfo';
 import { ProductForm } from './product-form.component';
 import { Response } from '@angular/http';
+import { Manufacturer } from '../manufacturer/Manufacturer';
+import { Category } from '../category/category';
+import { CategoryService } from '../category/category.service';
+import { ManufacturerService } from '../manufacturer/manufacturer.service';
 
 @Component({
     selector: 'app-product-list',
@@ -29,6 +33,16 @@ import { Response } from '@angular/http';
  */
 export class ProductListComponent implements OnInit {
 
+    id: number;
+    isShow = false;
+    indexCategorySelection: number;
+    indexManufactererSelection: number;
+    categorySelections: Array<any> = [];
+    manufacturerSelections: Array<any> = [];
+    codeManfacture: string;
+    product: Product;
+    listCategory: Category[]
+    listManfacturer: Manufacturer[]
     productInfo: ProductPageInfo;
     products: Product[];
     // name: Amphitheater.nameAmphitheater;
@@ -36,7 +50,7 @@ export class ProductListComponent implements OnInit {
     filterForm: FormGroup;
     // search restriction
     filterObject: Product;
-    switchGetAmphitheater = false;
+    switchGetProduct = false;
     checkAllItemFlag = false;
     currentPageView: number = 0;
     fromElement: number;
@@ -52,13 +66,16 @@ export class ProductListComponent implements OnInit {
     listStatus = Constants.STATUS_LIST;
     fromNumber: number;
     toNumber: number;
+    ProductForm: FormGroup;
 
     // list amphitheater to export file excel
-    amphitheater: Product[];
+    productsss: Product[];
 
     constructor(
         private productService: ProductService,
         private dialogService: DialogService,
+        private categoryService: CategoryService,
+        private manufacturerService: ManufacturerService,
         private fb: FormBuilder,
         private router: Router,
         private translate: TranslateService,
@@ -73,6 +90,8 @@ export class ProductListComponent implements OnInit {
         this.filterObject = new Product();
         this.getPageProduct(this.currentPage);
         new PageInfo();
+        this.getListCategory();
+        this.getListManfacture();
     }
 
     /**
@@ -84,13 +103,13 @@ export class ProductListComponent implements OnInit {
         debugger
         this.productService.getPageProduct(page)
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 debugger
                 this.productInfo = response.data;
                 this.products = response.data.content;
-                console.log(this.products)
+               // console.log(this.products)
                 this.pageLength = response.data.content.length;
-                console.log("page",this.pageLength)
+                //console.log("page",this.pageLength)
                 this.totalElements = this.productInfo.totalElements;
                 this.totalPages = this.productInfo.totalPages;
                 if (!(this.totalPages > 0)) {
@@ -110,6 +129,11 @@ export class ProductListComponent implements OnInit {
      * @description: Manage page transfers
      * @param page: Page will move to
      */
+    showAdvancedSearch() {
+
+        this.isShow = false;
+
+    }
     choosePageNumber(page) {
         debugger;
         var flag = true;
@@ -174,7 +198,7 @@ export class ProductListComponent implements OnInit {
                 if (response == true) {
                     this.productService.deleteProductByListId(entityIds)
                         .then(response => {
-                            console.log(response)
+                           // console.log(response)
                             let message;
                             if (response.code == 200) {
                                 this.translate.get('Message.DeleteSuccess').subscribe((res: string) => {
@@ -246,7 +270,7 @@ export class ProductListComponent implements OnInit {
       var entityIds = [];
       this.products.forEach(item => {
           if (item.checked == true) {
-              entityIds.push(item.idProduct);
+              entityIds.push(item.id);
           }
       });
       if (entityIds.length > 0) {
@@ -319,15 +343,15 @@ export class ProductListComponent implements OnInit {
     //     return isAuthorizied;
     // }
 
-    search(amphitheater: Product, page: number) {
-        this.filterObject = amphitheater;
-        this.switchGetAmphitheater = true;
+    search(product: Product, page: number) {
+        this.filterObject = product;
+        this.switchGetProduct = true;
         debugger;
-        this.productService.advanceSearch(amphitheater, page)
-            .then(productInfo => {
+        this.productService.advanceSearch(product, page)
+            .then(response => {
                 debugger;
-                this.productInfo = productInfo.data;
-                this.products = this.productInfo.content;
+                this.productInfo = response.data;
+                this.products = response.data.content;
                 this.pageLength = this.productInfo.content.length;
                 this.totalElements = this.productInfo.totalElements;
                 this.totalPages = this.productInfo.totalPages;
@@ -344,4 +368,116 @@ export class ProductListComponent implements OnInit {
     getNumberDeleteItems(): number {
         return this.numberDeleteItems;
     }
+    private getListManfacture() {
+        this.manufacturerService.getListManufacturer()
+          .then(response => {
+           // console.log("cate", response.data)
+           // console.log("id", response.data.id)
+            this.listManfacturer = response.data;
+            if (this.product && this.product.manfacturer) {
+              this.initializeManfacturerSelection(this.product.manfacturer.id);
+    
+            } else {
+              this.initializeManfacturerSelection(0);
+            }
+    
+          }).catch(error => {
+            console.log(error)
+          });
+      }
+    
+      private initializeManfacturerSelection(selectItem: number) {
+        let manfacturer_datas = []
+        var countItems = 0;
+        if (this.listManfacturer) {
+          this.listManfacturer.forEach(element => {
+         //   console.log(element);
+            var item = {
+              id: null, text: null
+            };
+            item.text = element.name;
+            item.id = element.id;
+            manfacturer_datas.push(item)
+            if (item.id == selectItem) {
+              this.indexManufactererSelection = countItems
+            }
+            countItems += 1
+          });
+        }
+        this.manufacturerSelections = manfacturer_datas
+       // console.log(this.manufacturerSelections)
+      }
+    
+      manfacturerChanged(id: number) {
+        //debugger 
+        var id1: number
+        //this.ProductForm.get('province.id').setValue(id);
+        this.ProductForm.get('manufacturerId').setValue(id);
+        this.manufacturerService.findOne(id).then(response => {
+          this.id = response.data.id;
+        //  console.log("Cáccs", response)
+          //this.ProductForm.get('categoryId').setValue(this.codeCategory)
+        }).catch(error => {
+          console.log(error)
+        });
+    
+      }
+    
+      private getListCategory() {
+        this.categoryService.getListCategory()
+          .then(response => {
+           // console.log("cate", response.data)
+           // console.log("id", response.data.id)
+            this.listCategory = response.data;
+            if (this.product && this.product.category) {
+              this.initializeCategorySelection(this.product.category.id);
+    
+            } else {
+              this.initializeCategorySelection(0);
+            }
+    
+          }).catch(error => {
+            console.log(error)
+          });
+      }
+    
+    
+    
+    
+      private initializeCategorySelection(selectItem: number) {
+        let category_datas = []
+        var countItems = 0;
+        if (this.listCategory) {
+          this.listCategory.forEach(element => {
+           // console.log(element);
+            var item = {
+              id: null, text: null
+            };
+            item.text = element.name;
+            item.id = element.id;
+            category_datas.push(item)
+            if (item.id == selectItem) {
+              this.indexCategorySelection = countItems
+            }
+            countItems += 1
+          });
+        }
+        this.categorySelections = category_datas
+       // console.log(this.categorySelections)
+      }
+      codeCategory: string;
+      categoryChanged(id: number) {
+        //debugger 
+        var id1: number
+        //this.ProductForm.get('province.id').setValue(id);
+        this.ProductForm.get('categoryId').setValue(id);
+        this.categoryService.findOne(id).then(response => {
+          this.id = response.data.id;
+          console.log("Cáccs", response)
+          
+        }).catch(error => {
+          console.log(error)
+        });
+    
+      }
 }

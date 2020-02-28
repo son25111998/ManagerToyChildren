@@ -106,7 +106,7 @@ export class CategoryBusinessComponent implements OnInit {
       .then(response => {
         debugger
         this.category = JSON.parse(JSON.stringify(response.data));
-        CategoryForm.bindingData(this.categoryForm, this.category);
+        CategoryForm.bindingData(categoryForm, this.category);
         this.getListProduct();
         // this.getListClassroom();
       })
@@ -183,67 +183,67 @@ export class CategoryBusinessComponent implements OnInit {
   isValidForm() {
 
     // check Province name is valid
-    if (this.categoryForm.get('nameClassroom').invalid) {
-      if (this.categoryForm.get('nameClassroom').errors.required) {
+    if (this.categoryForm.get('name').invalid) {
+      if (this.categoryForm.get('name').errors.required) {
         return false;
       }
-      if (this.categoryForm.get('nameClassroom').errors.pattern != null) {
+      if (this.categoryForm.get('name').errors.pattern != null) {
         return false;
       }
-      if (this.categoryForm.get('nameClassroom').errors.maxlength != null) {
-        return false;
-      }
-    }
-    if (this.categoryForm.get('symbol').invalid) {
-      if (this.categoryForm.get('symbol').errors.required) {
-        return false;
-      }
-      if (this.categoryForm.get('symbol').errors.pattern != null) {
-        return false;
-      }
-      if (this.categoryForm.get('symbol').errors.maxlength != null) {
+      if (this.categoryForm.get('name').errors.maxlength != null) {
         return false;
       }
     }
+    // if (this.categoryForm.get('symbol').invalid) {
+    //   if (this.categoryForm.get('symbol').errors.required) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('symbol').errors.pattern != null) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('symbol').errors.maxlength != null) {
+    //     return false;
+    //   }
+    // }
 
     // check Province name is valid
-    if (this.categoryForm.get('size').invalid) {
-      if (this.categoryForm.get('size').errors.required) {
-        return false;
-      }
-      if (this.categoryForm.get('size').errors.pattern != null) {
-        return false;
-      }
-      if (this.categoryForm.get('size').errors.maxlength != null) {
-        return false;
-      }
-    }
+    // if (this.categoryForm.get('size').invalid) {
+    //   if (this.categoryForm.get('size').errors.required) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('size').errors.pattern != null) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('size').errors.maxlength != null) {
+    //     return false;
+    //   }
+    // }
 
     // // check Province name is valid
-    if (this.categoryForm.get('chucNang').invalid) {
-      if (this.categoryForm.get('chucNang').errors.required) {
-        return false;
-      }
-      if (this.categoryForm.get('chucNang').errors.pattern != null) {
-        return false;
-      }
-      if (this.categoryForm.get('chucNang').errors.maxlength != null) {
-        return false;
-      }
-    }
+    // if (this.categoryForm.get('chucNang').invalid) {
+    //   if (this.categoryForm.get('chucNang').errors.required) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('chucNang').errors.pattern != null) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('chucNang').errors.maxlength != null) {
+    //     return false;
+    //   }
+    // }
 
-    // check Province name is valid
-    if (this.categoryForm.get('amount').invalid) {
-      if (this.categoryForm.get('amount').errors.required) {
-        return false;
-      }
-      if (this.categoryForm.get('amount').errors.pattern != null) {
-        return false;
-      }
-      if (this.categoryForm.get('amount').errors.maxlength != null) {
-        return false;
-      }
-    }
+    // // check Province name is valid
+    // if (this.categoryForm.get('amount').invalid) {
+    //   if (this.categoryForm.get('amount').errors.required) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('amount').errors.pattern != null) {
+    //     return false;
+    //   }
+    //   if (this.categoryForm.get('amount').errors.maxlength != null) {
+    //     return false;
+    //   }
+    // }
 
     return true;
 

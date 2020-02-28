@@ -40,8 +40,9 @@ export class ProductService extends CommonService {
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
-        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_FORM_URLENCODED_VALUE);
-        var promise = this.http.post(this.ProductApi + "/upload", body)
+        debugger
+        var promise = this.http.post(this.ProductApi + "/upload", 
+        body,{ headers: secureHeaders })
           .toPromise()
           .then(response => response.json() as any)
           .catch(error => {
