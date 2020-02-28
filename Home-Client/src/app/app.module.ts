@@ -64,6 +64,9 @@ const routes: Routes = [
       { path: 'home', component: HomepageComponent },
       { path: 'login', component: LoginComponent },
       { path: 'shop', component: ShopComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'contact', component: ContactComponent },
+      { path: 'blog', component: BlogComponent },
       // { path: 'singleproduct', component: ProductSingleComponent},
       { path: 'checkout', component: CheckoutComponent },
       { path: 'login', component: LoginComponent }
