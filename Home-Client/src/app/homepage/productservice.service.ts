@@ -53,10 +53,10 @@ export class ProductserviceService extends CommonService {
         return promise;
     }
     public getListProduct(): Promise<any> {
-        //  let accessToken = this.getAccessToken();
+         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
-        //secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
-        //secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
         var promise = this.http.get(this.ProductApi + "/all", { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
@@ -65,5 +65,22 @@ export class ProductserviceService extends CommonService {
             });
         return promise;
     }
+    createToCart(): Promise<any> {
+        // amphitheater.status = "1";
+        debugger
+        let accessToken = this.getAccessToken();
+        var secureHeaders = new Headers();
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
+        var promise = this.http.post(Constants.BASE_URL+"/shoppingcart-management/managed-shoppingcart",
+             { headers: secureHeaders })
+            .toPromise()
+            .then(response => response.json() as any)
+            .catch(error => {
+                return this.handleError(error);
+            });
+        return promise;
+    }
+
 
 }

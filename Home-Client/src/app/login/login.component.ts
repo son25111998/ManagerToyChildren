@@ -62,10 +62,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
+   
 
     this.authenticationService.logout();
-    debugger
+  
 
     // get return url from route parameters or default to '/'
    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -77,13 +77,13 @@ export class LoginComponent implements OnInit {
   login() {
     // debugger
     this.authenticationService.login(this.model.username, this.model.password).subscribe(data=>{
-  debugger
+
         let response : any = data;
         let resp = JSON.parse(response._body);
         let accessToken = "Bearer "+ resp.token;
         localStorage.setItem(Constants.ACCESS_TOKEN, accessToken);
         localStorage.setItem(Constants.IS_AUTHENTIC, 'true');
-        debugger
+      
         localStorage.setItem(JWT_TOKEN,resp.token);
         this.router.navigate([this.returnUrl]);
          
@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
    * @param lang the language
    */
   onSelectLanguage(lang: LanguageItem) {
-    debugger
+
     this.SelectedLanguage = lang;
     localStorage.setItem(Constants.KEY_LANGUAGE, lang.Key);
     //this.translate.use(lang.Key);

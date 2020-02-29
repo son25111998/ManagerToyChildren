@@ -22,6 +22,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './authentication/guard/auth.guard';
 import { AmComponent } from './am/am.component';
 import{HomepageComponent} from './homepage/homepage.component';
+import { SingleProductComponent } from './single-product/single-product.component';
 
 
 // import { TranslateService } from '@ngx-translate/core';
@@ -49,7 +50,8 @@ const routes: Routes = [
     FooterHomeComponent,
     LoginComponent,
     HomepageComponent,
-    AmComponent
+    AmComponent,
+    SingleProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ const routes: Routes = [
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       // { path: 'cities', component: itiesComponent },
-      { path: 'home', component: HomepageComponent },
+      { path: 'home', component: HomepageComponent},
+      {path: 'single-product/:id', component: SingleProductComponent},
       { path: 'login', component: LoginComponent },
       { path: 'shop', component: ShopComponent },
       { path: 'about', component: AboutComponent },

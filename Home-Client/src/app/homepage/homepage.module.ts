@@ -7,22 +7,16 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { createTranslateLoader, CustomHandler } from '../i18n-setting';
 import { HttpClient } from '@angular/common/http';
-import { ProductSingleComponent } from './product-single/product-single.component';
+
 import { ResponseMessageModule } from '../util/response-message/response-message.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 
-import { ProductserviceService } from './productservice.service';
 
-const routes: Routes = [
 
- 
-  { path: 'detail/:id', component: ProductSingleComponent, pathMatch: 'full' },
-
-]
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    //RouterModule.forChild(routes),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -42,10 +36,9 @@ const routes: Routes = [
     })
   ],
   declarations: [
-    ProductSingleComponent,
 
   ],
   exports: [RouterModule],
-  providers: [ProductserviceService]
+  providers: []
 })
 export class HomePageModule { }
