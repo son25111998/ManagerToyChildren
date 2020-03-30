@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../util/constants';
+import { Product } from '../../../categories/product/product';
+import { ProductService } from '../../../categories/product/product.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers:[ProductService]
 })
 export class HomeComponent implements OnInit {
   isUpdatedBarChart: boolean;
@@ -12,7 +15,7 @@ export class HomeComponent implements OnInit {
     chart: {
       type: 'column'
     },
-    title: { text: 'API VERSION OF THE MOST USED' },
+    title: { text: 'PRODUCT OF THE MOST USED' },
     series: [{
       name: 'Request Number',
       colorByPoint: true,
@@ -37,10 +40,39 @@ export class HomeComponent implements OnInit {
     width: null,
     height: null
   };
+   productTheMostUsedList: Product[];
+  
+
+  constructor(
+     private productService: ProductService
+  ) { }
 
   ngOnInit() {
+    this.getApiVersionTheMostUsed();
   }
-
+  public getApiVersionTheMostUsed() {
+    this.isUpdatedBarChart = false;
+    this.productService.getListProduct()
+      .then(response => {
+        this.productTheMostUsedList = response.data;
+        console.log(this.productTheMostUsedList);
+        // let barChartLables: Array<String> = [];
+        let barChartData = [];
+        let barChartDataItems: Array<BarChartDataItem> = [];
+        this.productTheMostUsedList.forEach(apiVersionStatisticResponseItem => {
+          let barChartDataItem = new BarChartDataItem();
+          barChartDataItem.name =
+            apiVersionStatisticResponseItem.name +
+            //+ apiVersionStatisticResponseItem.description + 
+            ", ID: "+ apiVersionStatisticResponseItem.id;
+          barChartDataItem.y = apiVersionStatisticResponseItem.amount;
+          barChartDataItems.push(barChartDataItem);
+        });
+        this.isUpdatedBarChart = true;
+        this.barChartOptions.series[0].data = JSON.parse(JSON.stringify(barChartDataItems));
+      })
+      .catch(error => console.log(error));
+  }
 
 }
 

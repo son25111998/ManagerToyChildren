@@ -29,7 +29,7 @@ export class AccountForm {
             password: ["", Validators.compose([
                 //Validators.required,
                 Validators.maxLength(10),
-                Validators.pattern(Constants.NUMBER_PATTERN)
+                Validators.pattern(Constants.NAME_PATTERN)
             ])],
 
             email: ["", Validators.compose([

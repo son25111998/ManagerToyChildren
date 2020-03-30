@@ -7,6 +7,7 @@ import { LanguageItem, LanguageItemList } from '../../i18n-setting';
 import { User } from '../guard/user';
 import { ResponseDataDTO } from '../../am/common/dto/ResponseDataDTO';
 import { Constants } from '../../am/common/util/constants';
+
 const JWT_TOKEN = "JWT_TOKEN";
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ const JWT_TOKEN = "JWT_TOKEN";
  * Examine the handling of login requirements
  */
 export class LoginComponent implements OnInit {
+
 
   isLogin : boolean = true;
   user : any = {};
@@ -78,11 +80,20 @@ export class LoginComponent implements OnInit {
     // debugger
     this.authenticationService.login(this.model.username, this.model.password).subscribe(data=>{
   debugger
+        // if(this.user.username==null||this.user==''){
+        //   this.errorname = "* Tên đăng nhập không được để trống."
+        //   this.checkerro = true;
+        // }if(this.user.password==null||this.user==''){
+        //   this.errorpass = "* Mật khẩu không được để trống.";
+        //   this.checkerro = true;
+        // }
         let response : any = data;
         let resp = JSON.parse(response._body);
+        let username=this.model.username;
         let accessToken = "Bearer "+ resp.token;
         localStorage.setItem(Constants.ACCESS_TOKEN, accessToken);
         localStorage.setItem(Constants.IS_AUTHENTIC, 'true');
+        localStorage.setItem(Constants.NAME, username);
         debugger
         localStorage.setItem(JWT_TOKEN,resp.token);
         this.router.navigate([this.returnUrl]);

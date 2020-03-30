@@ -13,8 +13,6 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductBusinessComponent } from './product-business/product-business.component';
 import { ResponseMessageModule } from '../../common/util/response-message/response-message.module';
 import { SelectModule } from 'ng2-select';
-import { CategoryService } from '../category/category.service';
-import { ManufacturerService } from '../manufacturer/manufacturer.service';
 
 const routes: Routes = [
 
@@ -26,7 +24,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -50,6 +48,6 @@ const routes: Routes = [
     ProductDetailComponent,
   ],
   exports: [RouterModule],
-  providers: [CategoryService,ManufacturerService]
+  providers: []
 })
 export class ProductModule { }

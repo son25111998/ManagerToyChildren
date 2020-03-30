@@ -70,12 +70,10 @@ export class ManufacturerBusinessComponent implements OnInit {
       if (this.business == 'create') {
         debugger
         this.isUpdate = false;
-        this.getListClassroom();
         // console.log()
       }
       if (this.business == 'update') {
         this.isUpdate = true;
-        this.getListClassroom();
         this.bindingData(this.ManufacturerForm, this.id);
       }
     });
@@ -111,7 +109,6 @@ export class ManufacturerBusinessComponent implements OnInit {
       this.manufacturer = JSON.parse(JSON.stringify(response.data));
       ManufacturerForm.bindingData(manufacturerForm, this.manufacturer);
       // this.getListAmphitheater();
-      this.getListClassroom();
       })
       .catch(error => console.log("errors: " + error));
 
@@ -121,25 +118,24 @@ export class ManufacturerBusinessComponent implements OnInit {
    * @description : submit data
    * @param Province : the data
    */
-  submit(Device) {
+  submit(Manufacturer) {
     if (this.isUpdate) {
-      console.log(Device);
+      console.log(Manufacturer);
       debugger
-      this.updateDevice(Device);
+      this.updateManufacturer(Manufacturer);
     } else {
-      this.createClassroom(Device);
+      this.createManufacturer(Manufacturer);
     }
   }
 
   /**
    * Creat a new object
    */
-  private createClassroom(Device) {
+  private createManufacturer(Manufacturer) {
 
-    this.manufacturerService.create(Device)
+    this.manufacturerService.create(Manufacturer)
     .then(response => {
       debugger
-        this.getListClassroom();
         this.goBack();
       })
       .catch(error => {
@@ -160,8 +156,8 @@ export class ManufacturerBusinessComponent implements OnInit {
    * Update a object
    * @param Province
    */
-  private updateDevice(Device) {
-    this.manufacturerService.update(Device)
+  private updateManufacturer(Manufacturer) {
+    this.manufacturerService.update(Manufacturer)
       .then(response => {
         // this.getListAmphitheater();
         this.goBack();
@@ -197,73 +193,11 @@ export class ManufacturerBusinessComponent implements OnInit {
         return false;
       }
     }
-    // check Province name is valid
-    if (this.ManufacturerForm.get('amount').invalid) {
-      if (this.ManufacturerForm.get('amount').errors.required) {
-        return false;
-      }
-      if (this.ManufacturerForm.get('amount').errors.pattern != null) {
-        return false;
-      }
-      if (this.ManufacturerForm.get('amount').errors.maxlength != null) {
-        return false;
-      }
-    }
 
     return true;
   }
 
-  private getListClassroom() {
-    this.categoryService.getListCategory()
-        .then(response => {
-            this.listCategory = response.data;
 
-            this.initializeClassroomSelection(0);
-
-
-        }).catch(error => {
-            console.log(error)
-        });
-}
-
-private initializeClassroomSelection(selectItem: number) {
-    debugger
-    let classroom_datas = []
-    var countItems = 0;
-    if (this.listCategory) {
-        this.listCategory.forEach(element => {
-            var item = {
-                id: null, text: null
-            };
-            item.text = element.nameClassroom
-            item.id = element.idClassroom;
-            classroom_datas.push(item)
-            if (this.manufacturer != undefined && this.manufacturer != null ) {
-                // this.indexPolicySelection = countItems;
-                this.indexCategorySelection = countItems
-            }
-            countItems += 1
-        });
-    }
-    this.categorySelections = classroom_datas
-    console.log(this.categorySelections)
-}
-
-classroomChanged(id: number) {
-    // this.ClassroomForm.get('classroom').setValue(new Classroom())
-    debugger
-    this.ManufacturerForm.get('classroom.idClassroom').setValue(id)
-    if (!id) {
-        debugger
-        this.listCategory = []
-        this.categorySelections = []
-        this.indexCategorySelection = 0
-        this.classroomChanged(0)
-    } else {
-        // this.getListClassroom()
-    }
-
-}
 
 public refreshPolicyValue(value: any): void {
     this.indexCategorySelection = null;

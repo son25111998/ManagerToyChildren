@@ -101,7 +101,6 @@ export class ManufacturerListComponent implements OnInit {
      * @param page: the paging restriction
      */
     getPageManufacturer(manufacturer: Manufacturer, page: number) {
-        this.searchObject = manufacturer;
         debugger
         this.manufacturerService.getPageManufacturer(manufacturer, page)
             .then(response => {
@@ -211,7 +210,7 @@ export class ManufacturerListComponent implements OnInit {
                                 this.translate.get('Message.DeleteFail400').subscribe((res: string) => {
                                     message = res;
                                 });
-                                this.toastr.error('', message, { dismiss: 'controlled' })
+                                this.toastr.warning('', message, { dismiss: 'controlled' })
                                     .then((toast: Toast) => {
                                         setTimeout(() => {
                                             this.toastr.dismissToast(toast);

@@ -61,8 +61,8 @@ export class AuthenticationService extends CommonService {
    * @description request logout to server
    */
   logout(){
-    // debugger
-    // // remove user from local storage to log user out
+    debugger
+    // remove user from local storage to log user out
     // var secureHeaders = new Headers();
     // secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_FORM_URLENCODED_VALUE);
     // debugger
@@ -73,7 +73,7 @@ export class AuthenticationService extends CommonService {
     //     return this.handleError(error);
     //   });
     // return promise;
-    window.sessionStorage.clear();
+     window.sessionStorage.clear();
   }
 
   /**

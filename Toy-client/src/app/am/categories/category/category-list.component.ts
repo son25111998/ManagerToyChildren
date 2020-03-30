@@ -74,7 +74,7 @@ export class CategoryListComponent implements OnInit {
 
         this.filterForm = CategoryForm.categoryForm(this.fb, '');
         this.searchObject = new Category();
-        this.getPageClassroom(this.currentPage);
+        this.getPageCategory(this.searchObject,this.currentPage);
         new PageInfo();
     }
 
@@ -83,10 +83,10 @@ export class CategoryListComponent implements OnInit {
      * @param country: the search restriction
      * @param page: the paging restriction
      */
-    getPageClassroom(currentPage: number) {
+    getPageCategory(category:Category,currentPage: number) {
         debugger
         this.categoryService
-            .getPageCategory(currentPage)
+            .getPageCategory(category,currentPage)
             .then(
                 categoryInfo => {
                 this.categoryPageInfo = categoryInfo.data;
@@ -140,7 +140,7 @@ export class CategoryListComponent implements OnInit {
         if (flag == true) {
 
             this.currentPage = pageNumber;
-            this.getPageClassroom(this.currentPage);
+            this.getPageCategory(this.searchObject,this.currentPage);
             // page.value = pageNumber + 1;
         }
     }
@@ -172,7 +172,7 @@ export class CategoryListComponent implements OnInit {
             .confirm('Confirm Information', 'Are you sure to delete?')
             .subscribe(response => {
                 if (response == true) {
-                    this.categoryService.deleteClassroomsById(entityIds)
+                    this.categoryService.deleteCategoryById(entityIds)
                         .then(response => {
                             let message;
                             if (response.code == 200) {
@@ -189,7 +189,7 @@ export class CategoryListComponent implements OnInit {
                                 this.translate.get('Message.DeleteFail400').subscribe((res: string) => {
                                     message = res;
                                 });
-                                this.toastr.error('', message, { dismiss: 'controlled' })
+                                this.toastr.warning('', message, { dismiss: 'controlled' })
                                     .then((toast: Toast) => {
                                         setTimeout(() => {
                                             this.toastr.dismissToast(toast);
@@ -197,7 +197,7 @@ export class CategoryListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageClassroom(this.currentPage);
+                            this.getPageCategory(this.searchObject,this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -248,51 +248,57 @@ export class CategoryListComponent implements OnInit {
           }
       });
       if (entityIds.length > 0) {
-          this.dialogService.confirm('Confirm Information', 'Are you sure to delete?')
-              .subscribe(response => {
-                  if (response == true) {
-                      this.categoryService.deleteClassroomsById(entityIds)
-                          .then(response => {
-                              let message;
-                              if (response.code == 200) {
-                                this.translate.get('Message.DeleteSuccess').subscribe((res: string) => {
-                                    message = res;
-                                });
-                                this.toastr.success('', message, { dismiss: 'controlled' })
-                                    .then((toast: Toast) => {
-                                        setTimeout(() => {
-                                            this.toastr.dismissToast(toast);
-                                        }, 3000);
-                                    });
-                            } else if (response.code == 400) {
-                                this.translate.get('Message.DeleteFail400').subscribe((res: string) => {
-                                    message = res;
-                                });
-                                this.toastr.error('', message, { dismiss: 'controlled' })
-                                    .then((toast: Toast) => {
-                                        setTimeout(() => {
-                                            this.toastr.dismissToast(toast);
-                                        }, 3000);
-                                    });
-                            }
-
-                            this.getPageClassroom(this.currentPage);
-                        })
-                        .catch(error => {
-                            let message;
-                            this.translate.get('Message.DeleteFail').subscribe((res: string) => {
+        this.dialogService
+        .confirm('Dialog.ConfirmInfo', 'Dialog.MessageConfirm')
+        .subscribe(response => {
+            if (response == true) {
+    
+                this.categoryService.deleteCategoryById(entityIds)
+                    .then(response => {
+                        debugger
+                        let message;
+                        if (response.code == 200) {
+                            this.translate.get('Message.DeleteSuccess').subscribe((res: string) => {
                                 message = res;
                             });
-                            this.toastr.error('', message, { dismiss: 'controlled' })
+                            this.toastr.success('', message, { dismiss: 'controlled' })
                                 .then((toast: Toast) => {
                                     setTimeout(() => {
                                         this.toastr.dismissToast(toast);
                                     }, 3000);
                                 });
+                                this.getPageCategory(this.searchObject,this.currentPage);
+                        } else if (response.code == 400) {
+                            this.translate.get('Message.DeleteFail400').subscribe((res: string) => {
+                                message = res;
+                            });
+                            this.toastr.warning('', message, { dismiss: 'controlled' })
+                                .then((toast: Toast) => {
+                                    setTimeout(() => {
+                                        this.toastr.dismissToast(toast);
+                                    }, 3000);
+                                });
+                        }
+                        this.getPageCategory(this.searchObject,this.currentPage);
+    
+    
+                        // this.clickReference()
+                    })
+                    .catch(error => {
+                        let message;
+                        this.translate.get('Message.DeleteFail').subscribe((res: string) => {
+                            message = res;
                         });
-                  }
-              })
-      }
+                        this.toastr.error('', message, { dismiss: 'controlled' })
+                            .then((toast: Toast) => {
+                                setTimeout(() => {
+                                    this.toastr.dismissToast(toast);
+                                }, 3000);
+                            });
+                    });
+            }
+        })
+    }
   }
 
     /**

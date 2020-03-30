@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box grey-cascade">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>{{ 'SIDEBAR.Directory' | translate }} >
+                    {{ 'SIDEBAR.Order' | translate }} > {{ 'Common.Detail'
+                    | translate }}
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal align-middle">
+                            <div class="row">
+                                <div class="col-md-9" >
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.dateOrder'|translate}}:</label>
+                                        <div class="col-md-8">{{Order?.dateOrder}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.paymentType'|translate}}:</label>
+                                        <div class="col-md-8">{{order?.paymentType}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.couponId'|translate}}:</label>
+                                        <div class="col-md-8">{{order?.couponId}}</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.shippingId'|translate}}:</label>
+                                        <div class="col-md-8">{{order?.shippingId}}</div>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.Created'|translate}}:</label>
+                                         <div class="col-md-8">{{order?.customerId'}}</div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.taxId'|translate}}:</label>
+                                        <div class="col-md-8">{{order?.taxId}}</div>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label
+                                            class="col-md-4 text-right">{{'Order.OrderDetail'|translate}}:</label>
+                                        <div class="col-md-8">{{order?.updateTime |  date: 'dd/MM/yyyy'}}</div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 text-right">{{'Order.OrderDetail'|translate}}:</label>
+                                    </div>
+                                     <div class="form-group">
+                                        <div class="col-md-12" *ngFor="let orderDetail of orderDetails">
+                                            <label class="col-md-2 text-right">{{'Product.Code'|translate}}:</label>
+                                            <div class="col-md-2">{{orderDetail.productId}}</div>
+                                            <label class="col-md-2 text-right">{{'Product.Attribute'|translate}}:</label>
+                                            <div class="col-md-2">{{orderDetail.attribute}}</div>
+                                            <label class="col-md-2 text-right">{{'Product.Amount'|translate}}:</label>
+                                            <div class="col-md-2">{{orderDetail.quantity}}</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn default" (click)="goBack()">
+                                    <i class="fa fa-undo"
+                                        aria-hidden="true"></i>{{ 'Common.Back' | translate }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+#search_input_box .form-control {
+    background: transparent;
+    border: 0;
+    color: #ffba00;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 0; }

@@ -2,6 +2,7 @@ export class Constants {
     // Url API local site
     static BASE_URL = 'http://localhost:8080/api/v1/categories';
     static AUTH_URL = 'http://localhost:8080/api/auth';
+    static ACTIONHISTORY_URL = 'http://localhost:8080/savis/categories/api/v1/action-histories';
 
     // static BASE_URL = 'http://103.56.160.31:8080/api/savis/categories/api/v1/';
     // static BASE_URL = 'http://10.1.47.141:8080/api/savis/categories/api/v1/';
@@ -46,5 +47,14 @@ export class Constants {
 
     static RETURN_URL = "returnUrl";
 
-    static PAGE_SIZE = 5;
+    static PAGE_SIZE = 10;
+    static NAME='UserInfor';
+    static STATUS_HISTORY = [
+        { id: 1, name: 'Thêm mới' },
+        { id: 2, name: 'Câp nhật' },
+        { id: 0, name: 'Xóa' }
+        // { id: 3, name: 'Import' } 
+        // { id: 4, name: 'Export' } 
+    ]
+
 }

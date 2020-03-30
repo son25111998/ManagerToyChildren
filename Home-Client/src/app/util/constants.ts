@@ -46,5 +46,6 @@ export class Constants {
 
     static RETURN_URL = "returnUrl";
 
-    static PAGE_SIZE = 5;
+    static PAGE_SIZE = 8;
+    static NAME='UserInfor';
 }

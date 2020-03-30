@@ -1,9 +1,4 @@
-// import { Category } from "../category/category";
-// import { Manufacturer } from "../manufacturer/Manufacturer";
 
-/** 
- * the amphitheater class
-*/
 export class Product {
     id: number;
     name: string;
@@ -24,7 +19,9 @@ export class Product {
     manufacturer: number;
 
     statuss: number;
+    discount:number;
+    manufacturerId:number;
+    categoryId:number;
     checked: boolean;
-    // category:Category;
-    // manfacturer:Manufacturer;
+
 }

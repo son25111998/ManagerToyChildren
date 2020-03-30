@@ -1,130 +1,123 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/home">{{ 'SIDEBAR.Directory' | translate }}</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="/account">{{ 'SIDEBAR.Account' | translate}}</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li *ngIf="isUpdate===true">
+            <a href="#">{{ 'Common.Update' | translate}}</a>
+        </li>
+        <li *ngIf="isUpdate===false">
+            <a href="#">{{ 'Common.Create' | translate}}</a>
+        </li>
+    </ul>
+</div>
+<div style="padding:10px;"></div>
 <div class="row">
     <div class="col-md-12">
-        <!-- BEGIN EXAMPLE TABLE PORTLET-->
-        <!-- (ngSubmit)="submit(AmphitheaterForm.value)" -->
-        <div class="portlet box grey-cascade">
-            <div class="portlet-title">
-                <div class="caption" *ngIf="isUpdate===true">
-                    <i class="fa fa-globe"></i>{{ 'SIDEBAR.Directory' | translate }} >
-                    {{ 'SIDEBAR.Account' | translate }} > {{ 'Common.Update'
-                    | translate }}
+        <form class="form-horizontal align-middle" [formGroup]="accountForm" (ngSubmit)="submit(accountForm.value)">
+            <div class="row">
+                <!-- input  classroom -->
+                <div class="col-md-6">
+                    <input id="id" type="hidden" class="form-control" formControlName="id" />
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="username">{{ 'Account.Name' | translate }}
+                            <span style="color:red;"> *</span>
+                        </label>
+                        <div class="col-md-8">
+                            <input id="username" autocomplete="off" type="text" class="form-control"
+                                formControlName="username" placeholder="{{ 'Account.Name' | translate }}" />
+                            <!-- <div class="col-md-8">{{amphitheater?.nameClassroom}}</div> -->
+                            <small class="error"
+                                *ngIf="accountForm.get('username').invalid && (accountForm.get('username').touched)">
+                                <span *ngIf="accountForm.get('username').errors.required">
+                                    {{ 'Message.Required' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="isUpdate===false && !accountForm.get('username').errors.required&&accountForm.get('username').errors.pattern!=null">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="!accountForm.get('username').errors.required&&accountForm.get('username').errors.maxlength!=null">
+                                    {{ 'Message.MaxLength' | translate }} 20
+                                </span>
+                            </small>
+                            <small class="error"
+                                *ngIf="!accountForm.get('username').invalid && (accountForm.get('username').touched)">
+                                <span *ngIf="accountForm.get('username').value.trim() == ''">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span *ngIf="isUpdate===true && !isEqualOld(accountForm.get('username').value, 'id')">
+                                    {{ 'Message.Same' | translate }}
+                                </span>
+                            </small>
+                        </div>
+                    </div>
                 </div>
-                <div class="caption" *ngIf="isUpdate===false">
-                    <i class="fa fa-globe"></i>{{ 'SIDEBAR.Directory' | translate }} >
-                    {{ 'SIDEBAR.Account' | translate }} > {{ 'Common.Create'
-                    | translate }}
+
+                <small class="error"
+                    *ngIf="accountForm.get('username').invalid && (accountForm.get('username').touched)">
+                    <span
+                        *ngIf="accountForm.get('username').errors.required||accountForm.get('username').errors.pattern!=null">
+                        {{ 'Message.Required' | translate }}
+                    </span>
+                    <span
+                        *ngIf="!accountForm.get('username').errors.required&&accountForm.get('username').errors.maxlength!=null">
+                        {{ 'Message.MaxLength' | translate }} 50
+                    </span>
+                </small>
+                <small class="error"
+                    *ngIf="!accountForm.get('username').invalid && (accountForm.get('username').touched)">
+                    <span *ngIf="isUpdate===true && !isEqualOld(accountForm.get('username').value, 'name')">
+                        {{ 'Message.Same' | translate }}
+                    </span>
+                </small>
+                <!-- password -->
+                <div class="col-md-6">
+                    <!-- <input id="id" type="hidden" class="form-control" formControlName="id" /> -->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="password">{{ 'Account.Password' | translate }}
+                            <span style="color:red;"> *</span>
+                        </label>
+                        <div class="col-md-8">
+                            <input id="password" autocomplete="off" type="text" class="form-control"
+                                formControlName="password" placeholder="{{ 'Account.Password' | translate }}" />
+
+                            <small class="error"
+                                *ngIf="accountForm.get('password').invalid && (classroomForm.get('password').touched)">
+                                <span *ngIf="accountForm.get('password').errors.required">
+                                    {{ 'Message.Required' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="isUpdate===false && !accountForm.get('password').errors.required&&accountForm.get('password').errors.pattern!=null">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="!accountForm.get('password').errors.required&&accountForm.get('password').errors.maxlength!=null">
+                                    {{ 'Message.MaxLength' | translate }} 20
+                                </span>
+                            </small>
+                            <small class="error"
+                                *ngIf="!accountForm.get('password').invalid && (accountForm.get('password').touched)">
+                                <span *ngIf="accountForm.get('password').value.trim() == ''">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span *ngIf="isUpdate===true && !isEqualOld(accountForm.get('password').value, 'code')">
+                                    {{ 'Message.Same' | translate }}
+                                </span>
+                            </small>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-            <div class="portlet-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-horizontal align-middle" [formGroup]="accountForm"
-                            (ngSubmit)="submit(accountForm.value)">
-                            <div class="row">
-                                <!-- input  classroom -->
-                                <div class="col-md-6">
-                                    <input id="id" type="hidden" class="form-control" formControlName="id" />
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"
-                                            for="username">{{ 'Account.Name' | translate }}
-                                            <span style="color:red;"> *</span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <input id="username" autocomplete="off" type="text" class="form-control"
-                                                formControlName="username"
-                                                placeholder="{{ 'Account.Name' | translate }}" />
-                                            <!-- <div class="col-md-8">{{amphitheater?.nameClassroom}}</div> -->
-                                            <small class="error"
-                                                *ngIf="accountForm.get('username').invalid && (accountForm.get('username').touched)">
-                                                <span *ngIf="accountForm.get('username').errors.required">
-                                                    {{ 'Message.Required' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===false && !accountForm.get('username').errors.required&&accountForm.get('username').errors.pattern!=null">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="!accountForm.get('username').errors.required&&accountForm.get('username').errors.maxlength!=null">
-                                                    {{ 'Message.MaxLength' | translate }} 20
-                                                </span>
-                                            </small>
-                                            <small class="error"
-                                                *ngIf="!accountForm.get('username').invalid && (accountForm.get('username').touched)">
-                                                <span *ngIf="accountForm.get('username').value.trim() == ''">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===true && !isEqualOld(accountForm.get('username').value, 'id')">
-                                                    {{ 'Message.Same' | translate }}
-                                                </span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <small class="error"
-                                    *ngIf="accountForm.get('username').invalid && (accountForm.get('username').touched)">
-                                    <span
-                                        *ngIf="accountForm.get('username').errors.required||accountForm.get('username').errors.pattern!=null">
-                                        {{ 'Message.Required' | translate }}
-                                    </span>
-                                    <span
-                                        *ngIf="!accountForm.get('username').errors.required&&accountForm.get('username').errors.maxlength!=null">
-                                        {{ 'Message.MaxLength' | translate }} 50
-                                    </span>
-                                </small>
-                                <small class="error"
-                                    *ngIf="!accountForm.get('username').invalid && (accountForm.get('username').touched)">
-                                    <span
-                                        *ngIf="isUpdate===true && !isEqualOld(accountForm.get('username').value, 'name')">
-                                        {{ 'Message.Same' | translate }}
-                                    </span>
-                                </small>
-                                <!-- password -->
-                                <div class="col-md-6">
-                                    <!-- <input id="id" type="hidden" class="form-control" formControlName="id" /> -->
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"
-                                            for="password">{{ 'Account.Password' | translate }}
-                                            <span style="color:red;"> *</span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <input id="password" autocomplete="off" type="text" class="form-control"
-                                                formControlName="password"
-                                                placeholder="{{ 'Account.Password' | translate }}" />
-
-                                            <small class="error"
-                                                *ngIf="accountForm.get('password').invalid && (classroomForm.get('password').touched)">
-                                                <span *ngIf="accountForm.get('password').errors.required">
-                                                    {{ 'Message.Required' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===false && !accountForm.get('password').errors.required&&accountForm.get('password').errors.pattern!=null">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="!accountForm.get('password').errors.required&&accountForm.get('password').errors.maxlength!=null">
-                                                    {{ 'Message.MaxLength' | translate }} 20
-                                                </span>
-                                            </small>
-                                            <small class="error"
-                                                *ngIf="!accountForm.get('password').invalid && (accountForm.get('password').touched)">
-                                                <span *ngIf="accountForm.get('password').value.trim() == ''">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===true && !isEqualOld(accountForm.get('password').value, 'code')">
-                                                    {{ 'Message.Same' | translate }}
-                                                </span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <!-- <div class="col-md-6" *ngIf="!isUpdate===true">
+            <div class="row">
+                <!-- <div class="col-md-6" *ngIf="!isUpdate===true">
                                     <div class="form-group">
                                         <label class="control-label col-md-4"
                                             for="active">{{'Account.Status'|translate}}
@@ -147,8 +140,8 @@
 
 
 
-                                <!-- input update tên giảng đường -->
-                                <!-- <div class="col-md-6">
+                <!-- input update tên giảng đường -->
+                <!-- <div class="col-md-6">
                                     <input id="id" type="hidden" class="form-control" formControlName="id" />
                                     <div class="form-group">
                                         <label class="control-label col-md-4"
@@ -168,46 +161,43 @@
                                     </div>
                                 </div> -->
 
-                                <!-- email -->
-                                <div class="col-md-6">
-                                    <input id="id" type="hidden" class="form-control" formControlName="id" />
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"
-                                            for="email">{{ 'Account.Email' | translate }}
-                                            <span style="color:red;"> *</span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <input id="email" autocomplete="off" type="text" class="form-control"
-                                                formControlName="email"
-                                                placeholder="{{ 'Account.Email' | translate }}" />
-                                            <!-- <div class="col-md-8">{{amphitheater?.nameClassroom}}</div> -->
-                                            <small class="error"
-                                                *ngIf="accountForm.get('email').invalid && (accountForm.get('email').touched)">
-                                                <span *ngIf="accountForm.get('email').errors.required">
-                                                    {{ 'Message.Required' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===false && !accountForm.get('email').errors.required&&accountForm.get('email').errors.pattern!=null">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="!accountForm.get('email').errors.required&&accountForm.get('email').errors.maxlength!=null">
-                                                    {{ 'Message.MaxLength' | translate }} 20
-                                                </span>
-                                            </small>
-                                            <small class="error"
-                                                *ngIf="!accountForm.get('email').invalid && (accountForm.get('email').touched)">
-                                                <span *ngIf="accountForm.get('email').value.trim() == ''">
-                                                    {{ 'Message.CodeInvalid' | translate }}
-                                                </span>
-                                                <span
-                                                    *ngIf="isUpdate===true && !isEqualOld(accountForm.get('email').value, 'code')">
-                                                    {{ 'Message.Same' | translate }}
-                                                </span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- email -->
+                <div class="col-md-6">
+                    <input id="id" type="hidden" class="form-control" formControlName="id" />
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="email">{{ 'Account.Email' | translate }}
+                            <span style="color:red;"> *</span>
+                        </label>
+                        <div class="col-md-8">
+                            <input id="email" autocomplete="off" type="text" class="form-control"
+                                formControlName="email" placeholder="{{ 'Account.Email' | translate }}" />
+                            <!-- <div class="col-md-8">{{amphitheater?.nameClassroom}}</div> -->
+                            <small class="error"
+                                *ngIf="accountForm.get('email').invalid && (accountForm.get('email').touched)">
+                                <span *ngIf="accountForm.get('email').errors.required">
+                                    {{ 'Message.Required' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="isUpdate===false && !accountForm.get('email').errors.required&&accountForm.get('email').errors.pattern!=null">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span
+                                    *ngIf="!accountForm.get('email').errors.required&&accountForm.get('email').errors.maxlength!=null">
+                                    {{ 'Message.MaxLength' | translate }} 20
+                                </span>
+                            </small>
+                            <small class="error"
+                                *ngIf="!accountForm.get('email').invalid && (accountForm.get('email').touched)">
+                                <span *ngIf="accountForm.get('email').value.trim() == ''">
+                                    {{ 'Message.CodeInvalid' | translate }}
+                                </span>
+                                <span *ngIf="isUpdate===true && !isEqualOld(accountForm.get('email').value, 'code')">
+                                    {{ 'Message.Same' | translate }}
+                                </span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
 
 
 
@@ -216,8 +206,8 @@
 
 
 
-                                <!-- kích cỡ -->
-                                <!-- <div class="col-md-6">
+                <!-- kích cỡ -->
+                <!-- <div class="col-md-6">
                                     <input id="id" type="hidden" class="form-control" formControlName="size" />
                                     <div class="form-group">
                                         <label class="control-label col-md-4"
@@ -260,8 +250,8 @@
 
 
 
-                                <!-- chức năng -->
-                                <!-- <div class="col-md-6">
+                <!-- chức năng -->
+                <!-- <div class="col-md-6">
                                     <input id="id" type="hidden" class="form-control" formControlName="idClassroom" />
                                     <div class="form-group">
                                         <label class="control-label col-md-4"
@@ -302,37 +292,30 @@
                                 </div> -->
 
 
-                                <div class="col-md-6" *ngIf="isUpdate===true">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"
-                                            for="active">{{'Account.Status'|translate}}
-                                            <span style="color:red;"> *</span>
-                                        </label>
-                                        <div class="col-md-8">
-                                            <input type="hidden" required>
-                                            <select class="form-control" formControlName="active" autofocus>
-                                                <option *ngFor="let status of listStatus" [value]="status.id">
-                                                    {{status.name}}</option>
-                                            </select>
-                                            <small class="error" *ngIf="accountForm.get('active').invalid 
+                <div class="col-md-6" *ngIf="isUpdate===true">
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="active">{{'Account.Status'|translate}}
+                            <span style="color:red;"> *</span>
+                        </label>
+                        <div class="col-md-8">
+                            <input type="hidden" required>
+                            <select class="form-control" formControlName="active" autofocus>
+                                <option *ngFor="let status of listStatus" [value]="status.id">
+                                    {{status.name}}</option>
+                            </select>
+                            <small class="error" *ngIf="accountForm.get('active').invalid 
                                   && (accountForm.get('active').touched)">
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"
-                                    [disabled]="!isValidForm()">{{ 'Common.Save' | translate }}</button>
-                                <button type="button" class="btn default" (click)="goBack()">
-                                    <i class="fa fa-undo"
-                                        aria-hidden="true"></i>{{ 'Common.Back' | translate }}</button>
-                            </div>
-                        </form>
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- END EXAMPLE TABLE PORTLET-->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"
+                    [disabled]="!isValidForm()">{{ 'Common.Save' | translate }}</button>
+                <button type="button" class="btn default" (click)="goBack()">
+                    <i class="fa fa-undo" aria-hidden="true"></i>{{ 'Common.Back' | translate }}</button>
+            </div>
+        </form>
     </div>
 </div>

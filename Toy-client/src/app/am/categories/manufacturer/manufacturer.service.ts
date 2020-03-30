@@ -79,7 +79,7 @@ export class ManufacturerService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.delete(this.ManufacturerApi + "/delete-all/" + entityIds, { headers: secureHeaders })
+        var promise = this.http.delete(this.ManufacturerApi + "/delete-multiple/" + entityIds, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -97,9 +97,9 @@ export class ManufacturerService extends CommonService {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
-        // secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
+        secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ManufacturerApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
+        var promise = this.http.post(this.ManufacturerApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE,manufacturer, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {

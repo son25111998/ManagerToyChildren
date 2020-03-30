@@ -10,13 +10,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { ResponseMessageModule } from '../util/response-message/response-message.module';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { HomepageComponent } from './homepage.component';
 
+const routes: Routes = [
 
+  { path: '', component: HomepageComponent },
+
+]
 
 
 @NgModule({
   imports: [
-    //RouterModule.forChild(routes),
+    RouterModule.forChild(routes),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -36,7 +41,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     })
   ],
   declarations: [
-
+    HomepageComponent
   ],
   exports: [RouterModule],
   providers: []

@@ -47,8 +47,34 @@
 		"SignIn": "Đăng nhập hệ thống",
 		"Username": "Tài khoản"
 	},
+	
+	"OperationHistory": {
+		"Id": "ID",
+		"Action": "Thao tác",
+		"DateAction": "Thời gian thao tác",
+		"DetailAction":"Chi tiết thao tác",
+		"Module":"Module",
+		"UserName":"Người thao tác",
+		"RecordID": "ID bản ghi",
+		"Product":"Sản phẩm",
+		"Account":"Tài khoản",
+		"Category":"Thể loại",
+		"Manufacturer": "Nhà sản xuất",
+		"Status":"Trạng thái",
+		"Manipulation" : "Thao tác",
+		"Create":"Tạo mới",
+		"Update":"Cập Nhật",
+		"Delete":"Xóa",
+		"StartDate": "Ngày bắt đầu",
+		"EndDate":"Ngày kết thúc",
+		"Title":"Lịch Sử Hành Động",
+		"Common":"Hành Động",
+		"DateCommon ":"Thời gian hành động"
+
+	},
 	"SIDEBAR": {
 		"API": "API",
+		"OperationHistory":"Quản lý lịch sử thao tác",
 		"API Management": "Quản lý API",
 		"Action History": "Log hành động",
 		"Application": "Ứng dụng",
@@ -72,10 +98,11 @@
 		"API Usage": "Sử dụng API",
 		"Top API Application": "Ứng dụng truy cập API",
 		"API Last Access": "Thời điểm truy cập API",
-		"Category": "Thể loại",
+		"Category": "Danh Mục",
 		"Device": "Thiết bị",
 		"Account": "Người dùng",
-		"Product": "Sản phẩm"
+		"Product": "Sản phẩm",
+		"Manufacturer": "Nhà sản xuất"
 	},
 	"Message": {
 		"CreateSuccess": "Tạo mới thành công!",
@@ -121,6 +148,7 @@
 	},
 	"Error": {},
 	"Product": {
+		"Attribute":"Thuộc tính",
 		"Title": "Sản phẩm",
 		"Code": "Mã Sản phẩm",
 		"Name": "Tên Sản phẩm",
@@ -136,11 +164,36 @@
 		"EnterAmount":"Nhập số lượng",
 		"EnterPrice":"Nhập giá bán",
 		"EnterDescription":"Nhập mô tả",
-		"Description":"Mô tả"
+		"Description":"Mô tả",
+		"ChooseProduct":"Chọn sản phẩm"
+	},
+	"Order": {
+		"Title": "Hóa Đơn",
+		"Code": "Mã hóa đơn",
+		"Name": "Tên hóa đơn",
+		"dateOrder": "Ngày tạo hóa đơn",
+		"paymentType": "Kiểu thanh toán",
+		"couponId": "Mã Giảm giá",
+		"shippingId": "Mã chuyển hàng",
+		"customerId": "Nhân viên quản lý",
+		"taxId":"Mã Thuế",
+		"OrderDetail" : "Chi tiết hóa đơn",
+		"UpdatedBy":"Người cập nhật",
+		"Category":"Thể loại",
+		"EnterAmount":"Nhập số lượng",
+		"EnterPrice":"Nhập giá bán",
+		"EnterDescription":"Nhập mô tả",
+		"Description":"Mô tả",
+		"ChooseProduct":"Chọn sản phẩm"
+	},
+	"Label":{
+		"Common":"Hành Động",
+		"All":"Tất cả"
 	},
 	"Category": {
 		"Title": "Thể Loại",
 		"Code": "Mã Thể loại",
+		"EnterCode": " Nhập Mã Thể loại",
 		"Name": "Tên Thể loại",
 		"CreatedBy": "Người tạo",
 		"ChooseCategory": "Chọn thể loại",
@@ -153,6 +206,7 @@
 	"Manufacturer": {
 		"Title": "Nhà sản xuất",
 		"Code": "Mã nhà sản xuất",
+		"EnterCode": "Nhập Mã nhà sản xuất",
 		"Name": "Tên nhà sản xuất",
 		"Created": "Thời gian tạo",
 		"CreatedBy": "Người tạo",

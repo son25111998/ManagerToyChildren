@@ -44,7 +44,7 @@ export class ProductService extends CommonService {
         var promise = this.http.post(this.ProductApi + "/upload", 
         body,{ headers: secureHeaders })
           .toPromise()
-          .then(response => response.json() as any)
+          .then(response => response.json() as any) 
           .catch(error => {
             return this.handleError(error);
           });
@@ -210,6 +210,7 @@ export class ProductService extends CommonService {
             });
         return promise;
     }
+
 
 
 

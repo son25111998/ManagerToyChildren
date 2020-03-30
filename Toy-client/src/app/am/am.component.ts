@@ -31,6 +31,7 @@ export class AmComponent implements OnInit {
   // the timer
   private timer;
   private sub;
+  USER:String;
   
 
   ListLanguage: LanguageItem[];
@@ -64,13 +65,7 @@ export class AmComponent implements OnInit {
     this.token = localStorage.getItem(Constants.ACCESS_TOKEN);
     if(this.token != undefined && this.token.startsWith("Bearer ")){
       this.token = this.token.substring(7);
-     // this.authenticationService.getTimeoutTokenExpires(this.token)
-     // .then(response => {
-        //  this.countdownTimer(response.expires);
-     // })
-     // .catch(error => {
-      //    console.log(error);
-     // });
+
     } else {
       this.logout();
     }
@@ -78,6 +73,7 @@ export class AmComponent implements OnInit {
 
   ngOnInit() {
     //debugger
+    this.USER = localStorage.getItem(Constants.NAME);
     //this.currentUser = new User(JSON.parse(localStorage.getItem(Constants.CURRENT_USER)).data.username, JSON.parse(localStorage.getItem(Constants.CURRENT_USER)).data.name, JSON.parse(localStorage.getItem(Constants.CURRENT_USER)).data.email);
   }
 
@@ -120,6 +116,7 @@ export class AmComponent implements OnInit {
     localStorage.removeItem(Constants.IS_AUTHENTIC);
     localStorage.removeItem(Constants.ACCESS_TOKEN);
     localStorage.removeItem(Constants.CURRENT_USER);
+    localStorage.removeItem(Constants.NAME);
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }

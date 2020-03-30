@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit, AfterViewInit,AfterViewChecked 
 
   ngOnInit() {
     debugger;
-    this.getMenuNavigationByCurrentUser();
+    // this.getMenuNavigationByCurrentUser();
   }
 
   ngAfterViewInit() {

@@ -26,7 +26,7 @@ import { ManufacturerService } from '../manufacturer/manufacturer.service';
 @Component({
     selector: 'app-product-list',
     templateUrl: './product-list.component.html',
-    providers: [Product, DialogService, DataTable, ProductService]
+    providers: [Product, DialogService, DataTable, ProductService,CategoryService,ManufacturerService]
 })
 /**
  * @description: Display the list of countries and supports search, delete objects
@@ -88,7 +88,7 @@ export class ProductListComponent implements OnInit {
     ngOnInit() {
         this.filterForm = ProductForm.ProductForm(this.fb, '');
         this.filterObject = new Product();
-        this.getPageProduct(this.currentPage);
+        this.getPageProduct(this.filterObject,this.currentPage);
         new PageInfo();
         this.getListCategory();
         this.getListManfacture();
@@ -99,9 +99,10 @@ export class ProductListComponent implements OnInit {
      * @param country: the search restriction
      * @param page: the paging restriction
      */
-    getPageProduct(page: number) {
+    getPageProduct(product:Product,page: number) {
         debugger
-        this.productService.getPageProduct(page)
+        // this.productService.getPageProduct(page)
+        this.productService.advanceSearch(product,page)
             .then(response => {
                 //console.log(response.data)
                 debugger
@@ -164,7 +165,7 @@ export class ProductListComponent implements OnInit {
         if (flag == true) {
 
             this.currentPage = pageNumber;
-            this.getPageProduct(this.currentPage);
+            this.getPageProduct(this.filterObject,this.currentPage);
             // page.value = pageNumber + 1;
         }
     }
@@ -222,7 +223,7 @@ export class ProductListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageProduct(this.currentPage);
+                            this.getPageProduct(this.filterObject,this.currentPage);
                         })
                         .catch(error => {
                             let message;
@@ -302,7 +303,7 @@ export class ProductListComponent implements OnInit {
                                     });
                             }
 
-                            this.getPageProduct(this.currentPage);
+                            this.getPageProduct(this.filterObject,this.currentPage);
                         })
                         .catch(error => {
                             let message;

@@ -4,7 +4,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>{{ 'SIDEBAR.Directory' | translate }} >
-                    {{ 'SIDEBAR.Device' | translate }} > {{ 'Common.Detail'
+                    {{ 'SIDEBAR.Manufacturer' | translate }} > {{ 'Common.Detail'
                     | translate }}
                 </div>
             </div>
@@ -16,41 +16,31 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label
-                                            class="col-md-4 text-right">{{'Device.Name'|translate}}</label>
-                                        <div class="col-md-8">{{manufacturer?.nameDevice}}</div>
+                                            class="col-md-4 text-right">{{'Manufacturer.Name'|translate}}</label>
+                                        <div class="col-md-8">{{manufacturer?.name}}</div>
                                     </div>
                                     <div class="form-group">
                                         <label
-                                            class="col-md-4 text-right">{{'Device.Classroom'|translate}}</label>
-                                        <div class="col-md-8">{{manufacturer?.classroom.nameClassroom}}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label
-                                            class="col-md-4 text-right">{{'Device.Amount'|translate}}</label>
-                                        <div class="col-md-8">{{manufacturer?.amount}}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label
-                                            class="col-md-4 text-right">{{'Device.CreateTime'|translate}}</label>
+                                            class="col-md-4 text-right">{{'Manufacturer.CreateTime'|translate}}</label>
                                         <div class="col-md-8">{{manufacturer?.createTime |  date: 'dd/MM/yyyy'}}</div>
                                     </div>
                                     <div class="form-group">
                                         <label
-                                            class="col-md-4 text-right">{{'Device.CreatedBy'|translate}}</label>
+                                            class="col-md-4 text-right">{{'Manufacturer.CreatedBy'|translate}}</label>
                                         <div class="col-md-8">{{manufacturer?.createdBy}}</div>
                                     </div>
                                     <div class="form-group">
                                         <label
-                                            class="col-md-4 text-right">{{'Device.UpdateTime'|translate}}</label>
+                                            class="col-md-4 text-right">{{'Manufacturer.UpdateTime'|translate}}</label>
                                         <div class="col-md-8">{{manufacturer?.updateTime |  date: 'dd/MM/yyyy'}}</div>
                                     </div>
                                     <div class="form-group">
                                         <label
-                                            class="col-md-4 text-right">{{'Device.UpdatedBy'|translate}}</label>
+                                            class="col-md-4 text-right">{{'Manufacturer.UpdatedBy'|translate}}</label>
                                         <div class="col-md-8">{{manufacturer?.updatedBy}}</div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 text-right">{{'Device.Status'|translate}}</label>
+                                        <label class="col-md-4 text-right">{{'Manufacturer.Status'|translate}}</label>
                                         <div class="col-md-8">{{manufacturer?.statuss==1?'Active':'Inactive'}}</div>
                                     </div>
                                 </div>

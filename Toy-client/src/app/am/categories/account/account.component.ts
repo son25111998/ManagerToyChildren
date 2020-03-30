@@ -69,7 +69,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
       this.filterForm = AccountForm.AccountForm(this.fb, '');
       this.filterObject = new Account();
-      this.getPageAccount(this.currentPage);
+      this.getPageAccount(this.filterObject,this.currentPage);
       new PageInfo();
   }
 
@@ -78,9 +78,9 @@ export class AccountComponent implements OnInit {
    * @param country: the search restriction
    * @param page: the paging restriction
    */
-  getPageAccount(page: number) {
+  getPageAccount(account:Account,page: number) {
       debugger
-      this.accountService.getPageAccount(page)
+      this.accountService.advanceSearch(account,page)
           .then(response => {
               console.log(response.data)
               debugger
@@ -138,7 +138,7 @@ export class AccountComponent implements OnInit {
       if (flag == true) {
 
           this.currentPage = pageNumber;
-          this.getPageAccount(this.currentPage);
+          this.getPageAccount(this.filterObject,this.currentPage);
           // page.value = pageNumber + 1;
       }
   }
@@ -196,7 +196,7 @@ export class AccountComponent implements OnInit {
                                   });
                           }
 
-                          this.getPageAccount(this.currentPage);
+                          this.getPageAccount(this.filterObject,this.currentPage);
                       })
                       .catch(error => {
                           let message;
@@ -276,7 +276,7 @@ export class AccountComponent implements OnInit {
                                   });
                           }
 
-                          this.getPageAccount(this.currentPage);
+                          this.getPageAccount(this.filterObject,this.currentPage);
                       })
                       .catch(error => {
                           let message;

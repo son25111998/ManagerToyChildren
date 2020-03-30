@@ -20,6 +20,7 @@ import { MomentModule } from 'angular2-moment';
 import { AuthGuard } from '../authentication/guard/auth.guard';
 import { AuthenticationService } from '../authentication/guard/authentication.service';
 
+
 @NgModule({
   imports: [
     AmRoutingModule,
@@ -47,7 +48,7 @@ import { AuthenticationService } from '../authentication/guard/authentication.se
   providers: [DialogService, AuthGuard, AuthenticationService],
   // providers: [DialogService, AuthGuard],
   // providers: [DialogService],
-  declarations: [AmComponent, DialogComponent, SidebarComponent ]
+  declarations: [AmComponent, DialogComponent, SidebarComponent, ]
   //declarations: [AmComponent, DialogComponent, SidebarComponent ]
 })
 export class AmModule { }

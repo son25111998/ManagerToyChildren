@@ -1,0 +1,148 @@
+<div class="hero-wrap hero-bread" style="background-image: url('../../../assets/homecss/images/bg_6.jpg');">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9  text-center">
+        <h1 class="mb-0 bread">Collection</h1>
+        <p class="breadcrumbs"><span class="mr-2"><a href="/home">Home</a></span> <span>Product</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="profile-sidebar">
+      <div class="portlet light profile-sidebar-portlet">
+        <h3 class="page-title" style="padding-left: 84px;"> UserProfile
+          <small></small>
+        </h3>
+        <div class="profile-userpic profile-usertitle">
+          <img src="assets/homecss/images/avatar.png" class="img-responsive" alt=""> </div>
+        <!-- <div class="profile-usertitle"> -->
+          <div class="profile-usertitle-name" style="padding-left: 117px;"> {{USER}} </div>
+        <!-- </div> -->
+      </div>
+
+    </div>
+    <!-- END BEGIN PROFILE SIDEBAR -->
+    <!-- BEGIN PROFILE CONTENT -->
+    <div class="profile-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet light ">
+            <div class="portlet-title tabbable-line">
+              <div class="caption caption-md">
+                <i class="theme-font hide"></i>
+                <span class="caption-subject font-blue-madison  uppercase" style="font-size:30px;color: blue;">Profile Account</span>
+              </div>
+              <ul class="nav " style="float: right; margin-top: -22px;">
+                <li class="active">
+                  <a href="#tab_1_1" type="button" class="btn btn-primary" data-toggle="tab">Personal Info</a>
+                </li>
+                <li>
+                  <a href="#tab_1_3" data-toggle="tab" type="button" class="btn btn-secondary">Change Password</a>
+                </li>
+              </ul>
+            </div>
+            <hr>
+            <div class="portlet-body">
+              <div class="tab-content">
+                <!-- PERSONAL INFO TAB -->
+                <div class="tab-pane active" id="tab_1_1">
+                  <form role="form" [formGroup]="updateInfoForm" (ngSubmit)="updateInfoForm(updateInfoForm.value)">
+                    <div class="form-group">
+                      <label class="control-label">UserName<span style="color:red;"> *</span></label>
+                      <input type="text" placeholder="John" class="form-control" formControlName="userName">
+                      <small class="error" *ngIf="updateInfoForm.get('userName').invalid && (updateInfoForm.get('userName').touched || responseMessage!=null)">
+                        <span *ngIf="updateInfoForm.get('userName').errors.required||updateInfoForm.get('userName').errors.pattern!=null">
+                         
+                        </span>
+                      </small>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Lowered Username<span style="color:red;">
+                          *</span></label>
+                      <input type="text" placeholder="Doe" class="form-control" formControlName="loweredUsername">
+                      <small class="error" *ngIf="updateInfoForm.get('loweredUsername').invalid && (updateInfoForm.get('loweredUsername').touched || responseMessage!=null)">
+                        <span *ngIf="updateInfoForm.get('loweredUsername').errors.required||updateInfoForm.get('loweredUsername').errors.pattern!=null">
+                          
+                        </span>
+                      </small>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Mobile Alias<span style="color:red;">
+                          *</span></label>
+                      <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" formControlName="mobileAlias">
+                      <small class="error" *ngIf="updateInfoForm.get('mobileAlias').invalid && (updateInfoForm.get('mobileAlias').touched || responseMessage!=null)">
+                        <span *ngIf="updateInfoForm.get('mobileAlias').errors.required||updateInfoForm.get('mobileAlias').errors.pattern!=null">
+                       
+                        </span>
+                      </small>
+                    </div>
+                    <div class="margiv-top-10">
+                      <button type="submit" class="btn btn-success">Save</button>
+                      <a href="javascript:;" type="button" class="btn btn-danger" (click)="Return();"> Cancel </a>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- END CHANGE AVATAR TAB -->
+                <!-- CHANGE PASSWORD TAB -->
+                <div class="tab-pane" id="tab_1_3">
+                  <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword(changePasswordForm.value)">
+                    <div class="form-group">
+                      <label class="control-label">Current Password<span style="color:red;">
+                          *</span></label>
+                      <input type="password" class="form-control" formControlName="oldPass">
+                      <small class="error" *ngIf="changePasswordForm.get('oldPass').invalid && (changePasswordForm.get('oldPass').touched || responseMessage!=null)">
+                        <span *ngIf="changePasswordForm.get('oldPass').errors.required">   
+                        </span>
+                        <span *ngIf="changePasswordForm.get('oldPass').errors.required||changePasswordForm.get('oldPass').errors.pattern!=null">
+                        </span>
+                      </small>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">New Password<span style="color:red;">
+                          *</span></label>
+                      <input type="password" class="form-control" formControlName="newPass">
+                      <small class="error" *ngIf="changePasswordForm.get('newPass').invalid && (changePasswordForm.get('newPass').touched || responseMessage!=null)">
+                        <span *ngIf="changePasswordForm.get('newPass').errors.required">
+                          
+                        </span>
+                        <span *ngIf="changePasswordForm.get('newPass').errors.required||changePasswordForm.get('newPass').errors.pattern!=null">
+                          
+                        </span>
+                      </small>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">ReType New Password<span style="color:red;">
+                          *</span></label>
+                      <input type="password" class="form-control" formControlName="reNewPass">
+                      <small class="error" *ngIf="changePasswordForm.get('reNewPass').invalid && (changePasswordForm.get('reNewPass').touched || responseMessage!=null)">
+                        <span *ngIf="changePasswordForm.get('reNewPass').errors.required">
+                          
+                        </span>
+                        <span *ngIf="changePasswordForm.get('reNewPass').errors.required||changePasswordForm.get('reNewPass').errors.pattern!=null">
+                        
+                        </span>
+                      </small>
+                      <small class="error" *ngIf="notMap"><span>New passwords do not match.</span></small>
+                    </div>
+                    <div class="margin-top-10">
+                      <button type="submit" class="btn btn-success"> Change Password</button>
+                      <a href="javascript:;" class="btn btn-danger" type="button">Cancel </a>
+                    </div>
+                  </form>
+                </div>
+                <!-- END CHANGE PASSWORD TAB -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END PROFILE CONTENT -->
+  </div>
+</div>

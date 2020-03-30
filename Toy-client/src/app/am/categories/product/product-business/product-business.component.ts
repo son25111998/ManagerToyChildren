@@ -151,7 +151,7 @@ export class ProductBusinessComponent implements OnInit {
     this.manufacturerService.findOne(id).then(response => {
       this.id = response.data.id;
       //console.log("Cáccs", response)
-      //this.ProductForm.get('categoryId').setValue(this.codeCategory)
+      this.ProductForm.get('manufacturerId').setValue(id);
     }).catch(error => {
       console.log(error)
     });
@@ -204,11 +204,11 @@ export class ProductBusinessComponent implements OnInit {
   categoryChanged(id: number) {
     //debugger 
     var id1: number
-    //this.ProductForm.get('province.id').setValue(id);
+    
     this.ProductForm.get('categoryId').setValue(id);
     this.categoryService.findOne(id).then(response => {
       this.id = response.data.id;
-      // console.log("Cáccs", response)
+      this.ProductForm.get('categoryId').setValue(id);
 
     }).catch(error => {
       console.log(error)

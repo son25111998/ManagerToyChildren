@@ -17,7 +17,7 @@ import { HeaderValue } from '../../common/util/header-value';
 @Injectable()
 export class CategoryService extends CommonService {
     /**  the api url */
-    ClassroomApi = Constants.BASE_URL + "/category-management/managed-category";
+    CategoryApi = Constants.BASE_URL + "/category-management/managed-category";
 
     constructor(
         private http: Http,
@@ -30,15 +30,15 @@ export class CategoryService extends CommonService {
      * @description create a new country
      * @param country the new country
      */
-    create(classroom: Category): Promise<any> {
+    create(category: Category): Promise<any> {
         // amphitheater.status = "1";
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.post(this.ClassroomApi,
-            classroom, { headers: secureHeaders })
+        var promise = this.http.post(this.CategoryApi,
+            category, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -51,14 +51,14 @@ export class CategoryService extends CommonService {
      * @description update a country
      * @param country the new country
      */
-    update(classroom: Category): Promise<any> {
+    update(category: Category): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.put(this.ClassroomApi,
-            classroom, { headers: secureHeaders })
+        var promise = this.http.put(this.CategoryApi,
+            category, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -71,13 +71,13 @@ export class CategoryService extends CommonService {
      * @description Delete a list countries
      * @param entityIds the list ids
      */
-    deleteClassroomsById(entityIds: number[]): Promise<any> {
+    deleteCategoryById(entityIds: number[]): Promise<any> {
         debugger;
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.delete(this.ClassroomApi + "/delete-multiple/" + entityIds, { headers: secureHeaders })
+        var promise = this.http.delete(this.CategoryApi + "/delete-multiple/" + entityIds, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -91,13 +91,13 @@ export class CategoryService extends CommonService {
    * @param country the search restriction
    * @param page the paging restriction
    */
-    getPageCategory(page: number): Promise<any> {
+    getPageCategory(category:Category,page: number): Promise<any> {
         debugger
         let accessToken = this.getAccessToken();
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "?page=" + page + "&size=" + Constants.PAGE_SIZE, { headers: secureHeaders })
+        var promise = this.http.post(this.CategoryApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE,category, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -111,7 +111,7 @@ export class CategoryService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "/all", { headers: secureHeaders })
+        var promise = this.http.get(this.CategoryApi + "/all", { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -130,7 +130,7 @@ export class CategoryService extends CommonService {
         var secureHeaders = new Headers();
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
-        var promise = this.http.get(this.ClassroomApi + "/find-id/" + id, { headers: secureHeaders })
+        var promise = this.http.get(this.CategoryApi + "/find-id/" + id, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {
@@ -147,7 +147,7 @@ export class CategoryService extends CommonService {
         secureHeaders.append(HeaderField.AUTHORIZATION, accessToken);
         secureHeaders.append(HeaderField.CONTENT_TYPE, HeaderValue.APPLICATION_JSON_VALUE);
         debugger;
-        var promise = this.http.post(this.ClassroomApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE, classroom, { headers: secureHeaders })
+        var promise = this.http.post(this.CategoryApi + "/advance-search?page=" + page + "&size=" + Constants.PAGE_SIZE, classroom, { headers: secureHeaders })
             .toPromise()
             .then(response => response.json() as any)
             .catch(error => {

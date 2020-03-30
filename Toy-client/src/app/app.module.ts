@@ -17,6 +17,7 @@ import { MissingTranslationHandler, MissingTranslationHandlerParams, TranslateCo
 import {  CustomHandler, createTranslateLoader } from './i18n-setting';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HomeListComponent } from './homepageweb/home-list/home-list.component';
+
 //import { AccountComponent } from './categories/account/account.component';
 
 
